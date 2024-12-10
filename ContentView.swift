@@ -1,51 +1,63 @@
+//
+//  ContentView.swift
+//  Speeches
+//
+//  Created by Layza Maria Rodrigues Carneiro on 10/12/24.
+//
+
 import SwiftUI
 
-struct ContentView: View {
-    let columns = [
-        GridItem(.flexible()),
-        GridItem(.flexible()),
-        GridItem(.flexible())
-    ]
-    
-    @State var isPresented = false
-    
-    var body: some View {
-        NavigationStack {
-            ScrollView {
-                ZStack {
-                    VStack(alignment: .leading, spacing: 30) {
-                        HStack {
-                            Rectangle()
-                                .frame(width: 350, height: 150)
-                                .cornerRadius(10)
-                            
-                            Rectangle()
-                                .frame(width: 350, height: 150)
-                                .cornerRadius(10)
-                        }
-                        
-                        Text("Phonemes")
-                            .font(.title)
-                        
-                        LazyVGrid(columns: columns, spacing: 20) {
-                            ForEach(1...12, id: \.self) { index in
-                                Button {
-                                    isPresented = true
-                                } label: {
-                                    Text("Button \(index)")
-                                        .frame(width: 250, height: 150)
-                                        .background(Color.blue.opacity(0.7))
-                                        .foregroundColor(.white)
-                                        .cornerRadius(8)
-                                }
-                                .fullScreenCover(isPresented: $isPresented, content: ExerciseView.init)
-                            }
-                        }
-                    }
-                    .padding()
-                }
-            }
-            .navigationTitle("Hi Layza")
-        }
-    }
-}
+//struct ContentView: View {
+//  @StateObject var audioPlayerViewModel = AudioPlayerViewModel()
+//
+//  var body: some View {
+//    VStack {
+//      Button(action: {
+//        audioPlayerViewModel.playOrPause()
+//      }) {
+//        Image(systemName: audioPlayerViewModel.isPlaying ? "pause.circle" : "play.circle")
+//          .resizable()
+//          .frame(width: 64, height: 64)
+//      }
+//    }
+//  }
+//}
+//
+//struct ContentView: View {
+//    @StateObject private var audioRecorder = AudioRecorderViewModel()
+//    
+//    var body: some View {
+//        VStack(spacing: 20) {
+//            Button(action: {
+//                if audioRecorder.isRecording {
+//                    audioRecorder.stopRecording()
+//                } else {
+//                    audioRecorder.startRecording()
+//                }
+//            }) {
+//                Text(audioRecorder.isRecording ? "Stop Recording" : "Start Recording")
+//                    .padding()
+//                    .foregroundColor(.white)
+//                    .background(audioRecorder.isRecording ? Color.red : Color.blue)
+//                    .cornerRadius(10)
+//            }
+//            
+//            Button(action: {
+//                audioRecorder.playRecordedAudio()
+//            }) {
+//                Text("Play Recorded Audio")
+//                    .padding()
+//                    .foregroundColor(.white)
+//                    .background(Color.green)
+//                    .cornerRadius(10)
+//            }
+//            
+//            if let recordedFileURL = audioRecorder.getRecordedFileURL() {
+//                Text("Recorded File: \(recordedFileURL.lastPathComponent)")
+//                    .font(.footnote)
+//                    .padding()
+//            }
+//        }
+//        .padding()
+//    }
+//}

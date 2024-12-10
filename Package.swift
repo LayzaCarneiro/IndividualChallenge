@@ -33,7 +33,8 @@ let package = Package(
                 .portraitUpsideDown(.when(deviceFamilies: [.pad]))
             ],
             capabilities: [
-                .microphone(purposeString: "To analyze the audio.")
+                .microphone(purposeString: "To analyze the audio."),
+                .speechRecognition(purposeString: "Unknown Usage Description")
             ],
             appCategory: .education
         )
@@ -41,7 +42,10 @@ let package = Package(
     targets: [
         .executableTarget(
             name: "AppModule",
-            path: "."
+            path: ".",
+            resources: [
+                .process("Resources")
+            ]
         )
     ],
     swiftLanguageVersions: [.version("6")]
