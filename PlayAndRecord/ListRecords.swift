@@ -29,28 +29,57 @@ struct RecordingsList: View {
     }
 }
 
+struct RecordedLast: View {
+    
+    @ObservedObject var audioRecorder: AudioRecorder
+    
+    var body: some View {
+        if let lastRecording = audioRecorder.recordings.last {
+            VStack {
+                Text("Última Gravação:")
+                    .font(.headline)
+                    .padding(.bottom, 4)
+                RecordingRow(audioURL: lastRecording.fileURL)
+            }
+            .padding()
+        } else {
+            Text("Nenhuma gravação encontrada.")
+                .font(.subheadline)
+                .foregroundColor(.gray)
+                .padding()
+        }
+    }
+    
+    func delete(at offsets: IndexSet) {
+        var urlsToDelete = [URL]()
+        for index in offsets {
+            urlsToDelete.append(audioRecorder.recordings[index].fileURL)
+        }
+        audioRecorder.deleteRecording(urlsToDelete: urlsToDelete)
+    }
+}
+
 struct RecordingRow: View {
     
     var audioURL: URL
     
     @ObservedObject var audioPlayer = AudioPlayer()
     
-    
     var body: some View {
         HStack {
             Text("\(audioURL.lastPathComponent)")
             Spacer()
             if audioPlayer.isPlaying == false {
-                Button(action: {
+                Button {
                     self.audioPlayer.startPlayback(audio: self.audioURL)
-                }) {
+                } label: {
                     Image(systemName: "play.circle")
                         .imageScale(.large)
                 }
             } else {
-                Button(action: {
+                Button {
                     self.audioPlayer.stopPlayback()
-                }) {
+                } label: {
                     Image(systemName: "stop.fill")
                         .imageScale(.large)
                 }

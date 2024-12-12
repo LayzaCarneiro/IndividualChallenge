@@ -17,7 +17,7 @@ struct AudioApp: View {
                 RecordingsList(audioRecorder: audioRecorder)
                 
                 if audioRecorder.recording == false {
-                    Button(action: {self.audioRecorder.startRecording()}) {
+                    Button { self.audioRecorder.startRecording() } label: {
                         Image(systemName: "circle.fill")
                             .resizable()
                             .aspectRatio(contentMode: .fill)
@@ -27,7 +27,7 @@ struct AudioApp: View {
                             .padding(.bottom, 40)
                     }
                 } else {
-                    Button(action: {self.audioRecorder.stopRecording()}) {
+                    Button { self.audioRecorder.stopRecording() } label: {
                         Image(systemName: "stop.fill")
                             .resizable()
                             .aspectRatio(contentMode: .fill)
