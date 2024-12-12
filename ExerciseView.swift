@@ -20,17 +20,20 @@ struct ExerciseView: View {
                         } label: {
                             Text("x")
                                 .font(.title)
+                                .fontWeight(.semibold)
+                                .foregroundStyle(.black)
                         }
                         ProgressBar(color: .cyan)
                     }
                     
-                    RepeatWord()
+                    RepeatWord(audioRecorder: AudioRecorder())
                     
                     Spacer()
                 }
                 .navigationTitle("Vowel /i/")
                 .navigationBarTitleDisplayMode(.inline)
             }
+            .padding()
         }
     }
 }
