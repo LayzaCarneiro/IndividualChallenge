@@ -52,6 +52,7 @@ struct PhonemeListView: View {
 
 
 struct PhonemeDetailView: View {
+    @State var isPresented: Bool = false
     let phoneme: Phoneme
 
     var body: some View {
@@ -66,20 +67,22 @@ struct PhonemeDetailView: View {
                 .padding(.bottom, 16)
 
             Spacer()
-
-            NavigationLink(
-                destination: ExerciseListView(for: phoneme),
-                label: {
-                    Text("Start Exercises")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                }
-            )
-            .padding()
+            
+            Button {
+                isPresented = true
+            } label: {
+                Text("Start Exercises")
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+            }
+            .fullScreenCover(isPresented: $isPresented) {
+                ExerciseView(viewModel: ExerciseViewModel())
+            }
         }
+        .padding()
         .navigationTitle(phoneme.symbol)
         .navigationBarTitleDisplayMode(.inline)
     }

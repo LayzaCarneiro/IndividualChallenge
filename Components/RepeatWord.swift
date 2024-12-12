@@ -15,6 +15,12 @@ struct RepeatWord: View {
     
     var body: some View {
         VStack {
+            Text("did")
+                .font(.title)
+                .fontWeight(.semibold)
+            
+            // play audio
+            
             Text(viewModel.recognizedText)
                 .padding()
                 .border(Color.gray)
@@ -22,10 +28,6 @@ struct RepeatWord: View {
 //            RecordingsList(audioRecorder: audioRecorder)
             
             RecordedLast(audioRecorder: audioRecorder)
-            
-            Text("did")
-                .font(.title)
-                .fontWeight(.semibold)
             
             if audioRecorder.recording == false {
                 Button {

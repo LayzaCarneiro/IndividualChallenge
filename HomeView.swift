@@ -6,14 +6,9 @@ struct HomeView: View {
             ScrollView {
                 ZStack {
                     VStack(alignment: .leading, spacing: 30) {
-                        HStack {
-                            Rectangle()
-                                .frame(width: 350, height: 150)
-                                .cornerRadius(10)
-                            
-                            Rectangle()
-                                .frame(width: 350, height: 150)
-                                .cornerRadius(10)
+                        HStack(spacing: 21) {
+                            CustomRectangle(text: "suggestion")
+                            CustomRectangle(text: "offensive")
                         }
                         
                         Text("Phonemes")
@@ -26,7 +21,7 @@ struct HomeView: View {
                     .padding()
                 }
             }
-            .navigationTitle("Hi Layza")
+            .navigationTitle("Hi Little Person")
         }
     }
 }

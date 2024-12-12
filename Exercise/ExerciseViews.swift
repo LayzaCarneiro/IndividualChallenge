@@ -7,29 +7,6 @@
 
 import SwiftUI
 
-//struct ExerciseListView: View {
-//    @StateObject private var viewModel = ExerciseViewModel()
-//    
-//    var body: some View {
-//        NavigationStack {
-//            List(viewModel.exercises.indices, id: \.self) { index in
-//                NavigationLink(
-//                    destination: StepDetailView(viewModel: viewModel)
-//                        .onAppear {
-//                            viewModel.currentExerciseIndex = index
-//                            viewModel.resetSteps()
-//                        },
-//                    label: {
-//                        Text(viewModel.exercises[index].phoneme)
-//                            .font(.headline)
-//                    }
-//                )
-//            }
-//            .navigationTitle("Phoneme Exercises")
-//        }
-//    }
-//}
-
 struct ExerciseListView: View {
     let phoneme: Phoneme
 
@@ -40,17 +17,14 @@ struct ExerciseListView: View {
                 .fontWeight(.bold)
                 .padding()
 
-            // Exemplo: exiba uma lista de exercícios aqui
             List {
                 Text("Exercise 1")
                 Text("Exercise 2")
-                // Adicione mais exercícios conforme necessário
             }
         }
         .navigationTitle("Exercises")
     }
 }
-
 
 struct StepDetailView: View {
     @ObservedObject var viewModel: ExerciseViewModel
