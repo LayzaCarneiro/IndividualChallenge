@@ -20,7 +20,6 @@ struct PhonemeListView: View {
     var body: some View {
         NavigationStack {
             LazyVGrid(columns: columns, spacing: 20) {
-                
                 ForEach(phonemeVM.phonemes) { phoneme in
                     NavigationLink(
                         destination: PhonemeDetailView(phoneme: phoneme),
@@ -65,7 +64,10 @@ struct PhonemeDetailView: View {
             Text("Example word: \(phoneme.description)")
                 .font(.title3)
                 .padding(.bottom, 16)
-
+            
+            ExerciseCarousel(phoneme: phoneme)
+                .padding(.top, 50)
+            
             Spacer()
             
             Button {

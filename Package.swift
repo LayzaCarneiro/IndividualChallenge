@@ -34,8 +34,7 @@ let package = Package(
             ],
             capabilities: [
                 .microphone(purposeString: "To analyze the audio."),
-                .speechRecognition(purposeString: "To analyze the recordings."),
-                .mediaLibrary(purposeString: "To analyze the audio.")
+                .speechRecognition(purposeString: "To analyze the recordings.")
             ],
             appCategory: .education
         )

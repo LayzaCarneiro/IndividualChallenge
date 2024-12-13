@@ -6,6 +6,7 @@ struct HomeView: View {
             ScrollView {
                 ZStack {
                     VStack(alignment: .leading, spacing: 30) {
+                        
                         HStack(spacing: 21) {
                             CustomRectangle(text: "suggestion")
                             CustomRectangle(text: "offensive")
@@ -21,7 +22,9 @@ struct HomeView: View {
                     .padding()
                 }
             }
-            .navigationTitle("Hi Little Person")
+            .navigationTitle("Hi Layza")
         }
     }
 }
+
+// Para deficiência auditiva, considere suporte a dispositivos de audição Bluetooth ou implantes cocleares.

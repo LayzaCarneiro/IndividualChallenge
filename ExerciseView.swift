@@ -48,7 +48,11 @@ struct ExerciseView: View {
             Spacer()
 
             Button {
-                viewModel.goToNextStep()
+                if viewModel.currentStepIndex < viewModel.currentExercise.steps.count - 1 {
+                    viewModel.goToNextStep()
+                } else {
+                    dismiss()
+                }
             } label: {
                 Text(viewModel.currentStepIndex < viewModel.currentExercise.steps.count - 1 ? "Next Step" : "Finish")
                     .frame(maxWidth: .infinity)
@@ -58,7 +62,6 @@ struct ExerciseView: View {
                     .cornerRadius(10)
             }
             .padding()
-            .disabled(viewModel.currentStepIndex == viewModel.currentExercise.steps.count - 1)
         }
         .padding()
         .navigationTitle("Step \(viewModel.currentStepIndex + 1)")
