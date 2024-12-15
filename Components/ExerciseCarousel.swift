@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ExerciseCarousel: View {
     let phoneme: Phoneme
-    let items = ["Red", "Green"]
+    let items = ["Red"]
 
     var body: some View {
         TabView {
@@ -21,27 +21,22 @@ struct ExerciseCarousel: View {
                         VStack {
                             MiniVideoView()
                             
-                            Text("Lips")
-                                .font(.title)
-                                .fontWeight(.semibold)
-                                .foregroundStyle(.white)
-                            
-                            Text("Pull your lips apart.")
-                                .font(.title3)
-                                .foregroundStyle(.white)
+                            TipComponent(title: "1. Lips", description: "Pull your lips apart.")
+                            TipComponent(title: "2. Tongue", description: "Raise your tongue tip up.")
+                            TipComponent(title: "3. Respiration", description: "Air slides down the tongue.")
+
                         }
                     )
             }
         }
         .tabViewStyle(PageTabViewStyle())
-        .frame(width: 600, height: 650)
+        .frame(width: 600, height: 750)
         .cornerRadius(10)
     }
     
     func getColor(for item: String) -> Color {
         switch item {
-        case "Red": return .red
-        case "Green": return .green
+        case "Red": return .orange
         default: return .gray
         }
     }

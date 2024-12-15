@@ -9,7 +9,7 @@ import SwiftUI
 
 class ExerciseViewModel: ObservableObject {
     @Published var exercises: [Exercise] = [
-        Exercise(phoneme: "/ɪ/", description: "Practice the short 'i' sound", steps: ["Step 1: Say 'bit'", "Step 2: Hold for 3 seconds"]),
+        Exercise(phoneme: "/s/", description: "Practice the 's' sound", steps: ["Step 1: Say 'snake'", "Step 2: Hold for 3 seconds"]),
         Exercise(phoneme: "/æ/", description: "Practice the short 'a' sound", steps: ["Step 1: Say 'cat'", "Step 2: Repeat 5 times"]),
     ]
     
