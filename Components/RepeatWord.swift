@@ -1,68 +1,9 @@
-////
-////  RepeatWord.swift
-////  Speeches
-////
-////  Created by Layza Maria Rodrigues Carneiro on 09/12/24.
-////
 //
-//import SwiftUI
-//import AVKit
-//import AVFoundation
+//  RepeatWord.swift
+//  Speeches
 //
-//struct RepeatWord: View {
-//    @ObservedObject var audioRecorder: AudioRecorder
-//    @StateObject private var viewModel = SpeechRecognitionViewModel()
-//    
-//    var body: some View {
-//        VStack {
-//            Text("did")
-//                .font(.title)
-//                .fontWeight(.semibold)
-//            
-//            // play audio
-//            
-//            Text(viewModel.recognizedText)
-//                .padding()
-//                .border(Color.gray)
-//            
-////            RecordingsList(audioRecorder: audioRecorder)
-//            
-//            RecordedLast(audioRecorder: audioRecorder)
-//            
-//            if audioRecorder.recording == false {
-//                Button {
-//                    self.audioRecorder.startRecording()
-//                    viewModel.startRecognition()
-//                } label: {
-//                    Image(systemName: "circle.fill")
-//                        .resizable()
-//                        .aspectRatio(contentMode: .fill)
-//                        .frame(width: 70, height: 70)
-//                        .clipped()
-//                        .foregroundColor(.red)
-//                        .padding(.bottom, 40)
-//                }
-//            } else {
-//                Button {
-//                    self.audioRecorder.stopRecording()
-//                    viewModel.stopRecognition()
-//                } label: {
-//                    Image(systemName: "stop.fill")
-//                        .resizable()
-//                        .aspectRatio(contentMode: .fill)
-//                        .frame(width: 70, height: 70)
-//                        .clipped()
-//                        .foregroundColor(.red)
-//                        .padding(.bottom, 40)
-//                }
-//            }
-//        }
-//        .onAppear {
-//            viewModel.requestPermissions()
-//        }
-//        .padding()
-//    }
-//}
+//  Created by Layza Maria Rodrigues Carneiro on 09/12/24.
+//
 
 import SwiftUI
 import AVKit
@@ -70,25 +11,18 @@ import AVFoundation
 
 struct RepeatWord: View {
     @ObservedObject var audioRecorder: AudioRecorder
+    @ObservedObject var ExerciseVM: ExerciseViewModel
+
     @StateObject private var viewModel = SpeechRecognitionViewModel()
-    @State private var isPlaying: Bool = false
     
     var body: some View {
         VStack(spacing: 20) {
-            Text("snake")
+            Text(ExerciseVM.currentStep)
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .foregroundColor(.blue)
             
-            Button {
-                playAudio()
-            } label: {
-                Image(systemName: isPlaying ? "stop.circle.fill" : "play.circle.fill")
-                    .resizable()
-                    .frame(width: 50, height: 50)
-                    .foregroundColor(.blue)
-            }
-            .padding(.bottom, 10)
+            playSound()
             
             VStack {
                 Text("Recognized Text")
@@ -135,10 +69,6 @@ struct RepeatWord: View {
         }
         .padding()
         .frame(maxHeight: .infinity)
-    }
-    
-    private func playAudio() {
-        isPlaying.toggle()
     }
     
     private func startRecording() {

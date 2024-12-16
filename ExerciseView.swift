@@ -17,13 +17,21 @@ struct ExerciseView: View {
                 Button {
                     dismiss()
                 } label: {
-                    Text("x")
-                        .font(.title)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(.black)
+                    ZStack {
+                        Circle()
+                            .frame(width: 40, height: 40)
+                        
+                        Text("x")
+                            .font(.title)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(.white)
+                            .padding(.bottom, 5)
+                    }
                 }
                 
                 ProgressView(value: viewModel.progress)
+                    .progressViewStyle(ThickProgressViewStyle())
+                    .animation(.easeInOut(duration: 0.5), value: viewModel.progress)
                     .padding()
             }
 
@@ -36,14 +44,7 @@ struct ExerciseView: View {
                 .font(.title3)
                 .padding(.bottom, 16)
 
-            Spacer()
-
-            Text(viewModel.currentStep)
-                .font(.title2)
-                .multilineTextAlignment(.center)
-                .padding()
-
-            RepeatWord(audioRecorder: AudioRecorder())
+            RepeatWord(audioRecorder: AudioRecorder(), ExerciseVM: viewModel)
 
             Spacer()
 
@@ -65,5 +66,12 @@ struct ExerciseView: View {
         }
         .padding()
         .navigationTitle("Step \(viewModel.currentStepIndex + 1)")
+    }
+}
+
+struct ThickProgressViewStyle: ProgressViewStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        ProgressView(configuration)
+            .scaleEffect(x: 1, y: 4, anchor: .center)
     }
 }

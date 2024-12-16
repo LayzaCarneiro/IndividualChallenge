@@ -45,13 +45,6 @@ struct StepDetailView: View {
 
             Spacer()
 
-            Text(viewModel.currentStep)
-                .font(.title2)
-                .multilineTextAlignment(.center)
-                .padding()
-
-            Spacer()
-
             Button {
                 viewModel.goToNextStep()
             } label: {
