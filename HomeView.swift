@@ -4,30 +4,8 @@ struct HomeView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-//                Color.purple.opacity(0.1).ignoresSafeArea()
-                
                 ScrollView {
                     VStack(alignment: .leading, spacing: 30) {
-                        Button {
-                            let generator = UIImpactFeedbackGenerator(style: .medium)
-                            generator.impactOccurred()
-                        } label: {
-                            Text("Start Exercises")
-                                .fontWeight(.bold)
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                                .background(
-                                    LinearGradient(
-                                        gradient: Gradient(colors: [Color.blue, Color.blue]),
-                                        startPoint: .leading,
-                                        endPoint: .trailing
-                                    )
-                                )
-                                .foregroundColor(.white)
-                                .cornerRadius(15)
-                                .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 5)
-                        }
-                        
                         HStack {
                             Text("Welcome back! Keep practicing.")
                                 .font(.subheadline)

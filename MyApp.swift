@@ -4,7 +4,8 @@ import SwiftUI
 struct MyApp: App {
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            PhonoTestView()
+//            HomeView()
 //            ExerciseView(viewModel: ExerciseViewModel())
 //            ContentView()
         }
