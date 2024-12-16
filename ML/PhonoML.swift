@@ -76,10 +76,8 @@ class Phono {
 
     /// URL of model assuming it was installed in the same bundle as this class
     class var urlOfModelInThisBundle : URL {
-        let resPath = Bundle(for: self).url(forResource: "Phono", withExtension: "mlmodel")!
-        return try! MLModel.compileModel(at: resPath)
-//        let bundle = Bundle(for: self)
-//        return bundle.url(forResource: "Phono", withExtension:"mlmodelc")!
+        let bundle = Bundle(for: self)
+        return bundle.url(forResource: "Phono", withExtension:"mlmodelc")!
     }
 
     /**
