@@ -20,6 +20,7 @@ struct ExerciseCarousel: View {
                     .overlay(
                         VStack {
                             MiniVideoView(phoneme: phoneme)
+                                .padding(.bottom, -20)
                             
                             TipComponent(tip: phoneme.tips[0])
                             TipComponent(tip: phoneme.tips[1])

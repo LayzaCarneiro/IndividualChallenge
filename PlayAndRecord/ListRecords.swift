@@ -84,7 +84,7 @@ struct RecordingRow: View {
                 }
             }
             
-            Text("Your recording")
+            Text("Play sound")
                 .font(.headline)
                 .fontWeight(.semibold)
         }
