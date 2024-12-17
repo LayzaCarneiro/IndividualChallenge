@@ -12,7 +12,7 @@ struct AudioApp: View {
     @ObservedObject var audioRecorder: AudioRecorder
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 RecordingsList(audioRecorder: audioRecorder)
                 
@@ -41,11 +41,5 @@ struct AudioApp: View {
             .navigationBarTitle("Voice Recorder")
             .navigationBarItems(trailing: EditButton())
         }
-    }
-}
-
-struct AudioApp_Previews: PreviewProvider {
-    static var previews: some View {
-        AudioApp(audioRecorder: AudioRecorder())
     }
 }

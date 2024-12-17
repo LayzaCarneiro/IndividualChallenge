@@ -19,11 +19,11 @@ struct ExerciseCarousel: View {
                     .shadow(radius: 5)
                     .overlay(
                         VStack {
-                            MiniVideoView()
+                            MiniVideoView(phoneme: phoneme)
                             
-                            TipComponent(title: "1. Lips", description: "Pull your lips apart.")
-                            TipComponent(title: "2. Tongue", description: "Raise your tongue tip up.")
-                            TipComponent(title: "3. Respiration", description: "Air slides down the tongue.")
+                            TipComponent(tip: phoneme.tips[0])
+                            TipComponent(tip: phoneme.tips[1])
+                            TipComponent(tip: phoneme.tips[2])
 
                         }
                     )
@@ -42,8 +42,8 @@ struct ExerciseCarousel: View {
     }
 }
 
-struct CarouselView_Previews: PreviewProvider {
-    static var previews: some View {
-        ExerciseCarousel(phoneme: Phoneme(symbol: "s", description: "ss"))
-    }
-}
+//struct CarouselView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ExerciseCarousel(phoneme: Phoneme(symbol: "s", description: "ss"))
+//    }
+//}

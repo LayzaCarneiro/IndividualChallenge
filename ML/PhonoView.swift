@@ -53,9 +53,10 @@ class PhonoTestViewModel: ObservableObject {
     @Published var showError = false
     @Published var errorMessage: String?
 
-    private var audioRecorder: AVAudioRecorder?
     private var audioEngine: AVAudioEngine?
+    private var audioBuffer = AVAudioPCMBuffer() // Acumulador de buffer
     private let model = try! Phono() // Carrega o modelo ML
+    private var recordingTimer: Timer?
 
     func toggleRecording() {
         if isRecording {
@@ -76,31 +77,42 @@ class PhonoTestViewModel: ObservableObject {
 
             let inputNode = audioEngine.inputNode
             let recordingFormat = inputNode.outputFormat(forBus: 0)
-            inputNode.installTap(onBus: 0, bufferSize: 15600, format: recordingFormat) { buffer, _ in
-                self.processAudio(buffer: buffer)
+            audioBuffer = AVAudioPCMBuffer(pcmFormat: recordingFormat, frameCapacity: 44100 * 2)!
+
+            inputNode.installTap(onBus: 0, bufferSize: 44100, format: recordingFormat) { [weak self] buffer, _ in
+                guard let self = self else { return }
+                self.audioBuffer.append(buffer)
             }
 
             audioEngine.prepare()
             try audioEngine.start()
             isRecording = true
+
+            // Agendar o término após 2 segundos
+//            recordingTimer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { _ in
+//                self.stopRecording()
+//            }
         } catch {
             handle(error: error)
         }
     }
 
     private func stopRecording() {
+        recordingTimer?.invalidate()
         audioEngine?.stop()
         audioEngine?.inputNode.removeTap(onBus: 0)
         isRecording = false
+
+        // Processar o áudio acumulado
+        processAudio()
     }
 
-    private func processAudio(buffer: AVAudioPCMBuffer) {
-        stopRecording()
+    private func processAudio() {
         isProcessing = true
 
         DispatchQueue.global(qos: .userInitiated).async {
             do {
-                let audioSamples = self.convertBufferToMLMultiArray(buffer)
+                let audioSamples = self.convertBufferToMLMultiArray(self.audioBuffer)
                 let output = try self.model.prediction(audioSamples: audioSamples)
                 DispatchQueue.main.async {
                     self.prediction = output.target
@@ -137,6 +149,28 @@ class PhonoTestViewModel: ObservableObject {
         showError = true
         isProcessing = false
         isRecording = false
+    }
+}
+
+extension AVAudioPCMBuffer {
+    func append(_ buffer: AVAudioPCMBuffer) {
+        guard let channelData = buffer.floatChannelData else { return }
+        guard let targetChannelData = self.floatChannelData else { return }
+
+        for channel in 0..<Int(buffer.format.channelCount) {
+            let source = channelData[channel]
+            let target = targetChannelData[channel]
+
+            let targetIndex = Int(self.frameLength)
+            let sourceLength = min(Int(buffer.frameLength), Int(self.frameCapacity) - targetIndex)
+
+            if sourceLength > 0 {
+                memcpy(target.advanced(by: targetIndex), source, sourceLength * MemoryLayout<Float>.size)
+                self.frameLength += AVAudioFrameCount(sourceLength)
+            } else {
+                print("Buffer cheio, ignorando novos dados")
+            }
+        }
     }
 }
 

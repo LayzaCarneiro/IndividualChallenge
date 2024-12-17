@@ -32,7 +32,8 @@ struct HomeView: View {
                                     endPoint: .bottom
                                 ),
                                 info: "Tongue Twister",
-                                icon: "sparkles"
+                                icon: "sparkles",
+                                view: AnyView(AudioApp(audioRecorder: AudioRecorder()))
                             )
                             CustomRectangle(
                                 text: "Review your audios",
@@ -42,7 +43,8 @@ struct HomeView: View {
                                     endPoint: .bottom
                                 ),
                                 info: "Recordings",
-                                icon: "mic.fill"
+                                icon: "mic.fill",
+                                view: AnyView(AudioApp(audioRecorder: AudioRecorder()))
                             )
                         }
                         

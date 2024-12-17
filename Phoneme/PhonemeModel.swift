@@ -9,6 +9,9 @@ import SwiftUI
 
 struct Phoneme: Identifiable {
     let id = UUID()
+    let letter: String
     let symbol: String
     let description: String
+    let tips: [TipModel]
+    let soundFile: String
 }

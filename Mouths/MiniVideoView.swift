@@ -13,22 +13,44 @@ struct MiniVideoView: View {
     @State private var isPlaying = false
     @State private var loopCount = 0
     @State private var maxLoops = 3
+    @State var phoneme: Phoneme
+    
+    @ObservedObject var audioPlayer = AudioPlayer()
     
     let timer = Timer.publish(every: 0.2, on: .main, in: .common).autoconnect()
     
     var body: some View {
         VStack {
-            Button {
-                if !isPlaying {
-                    isPlaying = true
-                    loopCount = 0
-                } 
-            } label: {
-                Image(systemName: isPlaying ? "stop.circle.fill" : "play.circle.fill")
-                    .resizable()
-                    .frame(width: 50, height: 50)
-                    .foregroundColor(.blue)
-                    .padding(.top, 20)
+            HStack {
+                if audioPlayer.isPlaying == false {
+                    Button {
+                        if !isPlaying {
+                            isPlaying = true
+                            loopCount = 0
+                        }
+                        self.audioPlayer.startPlayback(audio: Bundle.main.url(forResource: phoneme.soundFile, withExtension: "m4a")!)
+                    } label: {
+                        Image(systemName: "play.circle.fill")
+                            .resizable()
+                            .frame(width: 50, height: 50)
+                            .foregroundColor(.blue)
+                            .padding(.top, 20)
+                    }
+                } else {
+                    Button {
+                        if !isPlaying {
+                            isPlaying = true
+                            loopCount = 0
+                        }
+                        self.audioPlayer.stopPlayback()
+                    } label: {
+                        Image(systemName: "stop.circle.fill")
+                            .resizable()
+                            .frame(width: 50, height: 50)
+                            .foregroundColor(.blue)
+                            .padding(.top, 20)
+                    }
+                }
             }
             
             Image(images[currentIndex])

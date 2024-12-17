@@ -13,48 +13,47 @@ struct CustomRectangle: View {
     let info: String
     @State var icon: String = ""
     @State var subtitle: String = ""
-
+    @State var view: AnyView
+    
     var body: some View {
-        ZStack {
-            Rectangle()
-                .fill(gradient)
-                .frame(width: 387, height: 180)
-                .cornerRadius(10)
-                .shadow(radius: 5)
-
-            VStack(spacing: 8) {
-                
-                HStack(spacing: 10) {
-                    Image(systemName: icon)
-                        .font(.system(size: 33, weight: .bold))
-                        .foregroundStyle(.white)
-                        .opacity(0.9)
-                       
-                    Text(info)
-                        .font(.system(size: 40, weight: .bold))
-                        .foregroundStyle(.white)
-                }
-                .padding(.trailing, 25)
-
-                Text(text)
-                    .font(.title2)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.white)
-
-                if subtitle != "" {
-                    Text(subtitle)
-                        .font(.subheadline)
-                        .foregroundColor(.white.opacity(0.8))
+        NavigationLink(
+            destination: view,
+            label: {
+                ZStack {
+                    Rectangle()
+                        .fill(gradient)
+                        .frame(width: 387, height: 180)
+                        .cornerRadius(10)
+                        .shadow(radius: 5)
+                    
+                    VStack(spacing: 8) {
+                        
+                        HStack(spacing: 10) {
+                            Image(systemName: icon)
+                                .font(.system(size: 33, weight: .bold))
+                                .foregroundStyle(.white)
+                                .opacity(0.9)
+                            
+                            Text(info)
+                                .font(.system(size: 40, weight: .bold))
+                                .foregroundStyle(.white)
+                        }
+                        .padding(.trailing, 25)
+                        
+                        Text(text)
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.white)
+                        
+                        if subtitle != "" {
+                            Text(subtitle)
+                                .font(.subheadline)
+                                .foregroundColor(.white.opacity(0.8))
+                        }
+                    }
+                    .padding()
                 }
             }
-            .padding()
-            
-//            Image(systemName: icon)
-//                .font(.system(size: 100, weight: .bold))
-//                .opacity(0.15)
-//                .foregroundStyle(.white)
-//                .frame(maxWidth: .infinity, alignment: .leading)
-//                .frame(maxHeight: .infinity, alignment: .bottom)
-        }
+        )
     }
 }

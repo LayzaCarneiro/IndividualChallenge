@@ -11,7 +11,7 @@ struct ProgressBar: View {
     var progress: Double = 0
     var total: Double = 100
     var color: Color
-
+    
     var body: some View {
         ProgressView(value: progress, total: total)
             .progressViewStyle(BarProgressStyle(color: color))
@@ -22,10 +22,10 @@ struct ProgressBar: View {
 
 struct BarProgressStyle: ProgressViewStyle {
     var color: Color = .green
-
+    
     func makeBody(configuration: Configuration) -> some View {
         let progress = configuration.fractionCompleted ?? 0.0
-
+        
         VStack(alignment: .leading) {
             RoundedRectangle(cornerRadius: 10.0)
                 .fill(Color(.white))

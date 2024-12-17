@@ -36,9 +36,6 @@ struct RecordedLast: View {
     var body: some View {
         if let lastRecording = audioRecorder.recordings.last {
             VStack {
-//                Text("Última Gravação:")
-//                    .font(.headline)
-//                    .padding(.bottom, 4)
                 RecordingRow(audioURL: lastRecording.fileURL)
             }
             .padding()
@@ -70,6 +67,8 @@ struct RecordingRow: View {
             if audioPlayer.isPlaying == false {
                 Button {
                     self.audioPlayer.startPlayback(audio: self.audioURL)
+                    print(audioURL)
+
                 } label: {
                     Image(systemName: "play.circle")
                         .imageScale(.large)
@@ -77,6 +76,8 @@ struct RecordingRow: View {
             } else {
                 Button {
                     self.audioPlayer.stopPlayback()
+                    print(audioURL)
+
                 } label: {
                     Image(systemName: "stop.fill")
                         .imageScale(.large)
@@ -87,11 +88,5 @@ struct RecordingRow: View {
                 .font(.headline)
                 .fontWeight(.semibold)
         }
-    }
-}
-
-struct RecordingsList_Previews: PreviewProvider {
-    static var previews: some View {
-        RecordingsList(audioRecorder: AudioRecorder())
     }
 }

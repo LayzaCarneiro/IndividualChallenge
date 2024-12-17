@@ -10,6 +10,8 @@ import SwiftUI
 struct ExerciseView: View {
     @ObservedObject var viewModel: ExerciseViewModel
     @Environment(\.dismiss) var dismiss
+    
+    @State var phoneme: Phoneme
 
     var body: some View {
         VStack {
@@ -35,16 +37,16 @@ struct ExerciseView: View {
                     .padding()
             }
 
-            Text(viewModel.currentExercise.phoneme)
+            Text(phoneme.symbol)
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .padding(.bottom, 8)
 
-            Text(viewModel.currentExercise.description)
+            Text(phoneme.description)
                 .font(.title3)
                 .padding(.bottom, 16)
 
-            RepeatWord(audioRecorder: AudioRecorder(), ExerciseVM: viewModel)
+            RepeatWord(audioRecorder: AudioRecorder(), ExerciseVM: viewModel, phoneme: phoneme)
 
             Spacer()
 

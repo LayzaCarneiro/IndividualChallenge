@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct TipComponent: View {
-    @State var title: String = ""
-    @State var description: String = ""
+    @State var tip: TipModel
     
     var body: some View {
         ZStack {
@@ -21,15 +20,17 @@ struct TipComponent: View {
                 .foregroundStyle(.white)
             
             HStack(spacing: 25) {
-                Text("\(title)")
+                Text("\(tip.title)")
                     .font(.title)
                     .fontWeight(.semibold)
                     .foregroundStyle(.blue)
                 
-                Text(description)
+                Text(tip.description)
                     .font(.title3)
                     .foregroundStyle(.blue)
                     .padding(.top, 5)
+                    .truncationMode(.tail) // Trunca o texto se exceder o limite
+                    .frame(width: 330)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.leading, 50)
@@ -38,5 +39,5 @@ struct TipComponent: View {
 }
 
 //#Preview {
-////    TipComponent(tip: TipModel(title: "Lips", description: "Pull your lips apart."))
+//    TipComponent(tip: TipModel(title: "Lips", description: "Pull your lips apart."))
 //}
