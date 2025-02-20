@@ -50,26 +50,26 @@ struct ARFaceTrackingView: UIViewRepresentable {
     }
 }
 
-struct ContentView: View {
-    @State private var feedbackText: String = "Movimente a boca e a língua!"
-
-    var body: some View {
-        ZStack {
-            // ARKit para rastreamento facial
-            ARFaceTrackingView(feedbackText: $feedbackText)
-                .edgesIgnoringSafeArea(.all)
-
-            // Feedback visual para o usuário
-            VStack {
-                Spacer()
-                Text(feedbackText)
-                    .font(.headline)
-                    .padding()
-                    .background(Color.white.opacity(0.8))
-                    .cornerRadius(10)
-                    .padding()
-            }
-        }
-    }
-}
+//struct ContentView: View {
+//    @State private var feedbackText: String = "Movimente a boca e a língua!"
+//
+//    var body: some View {
+//        ZStack {
+//            // ARKit para rastreamento facial
+//            ARFaceTrackingView(feedbackText: $feedbackText)
+//                .edgesIgnoringSafeArea(.all)
+//
+//            // Feedback visual para o usuário
+//            VStack {
+//                Spacer()
+//                Text(feedbackText)
+//                    .font(.headline)
+//                    .padding()
+//                    .background(Color.white.opacity(0.8))
+//                    .cornerRadius(10)
+//                    .padding()
+//            }
+//        }
+//    }
+//}
 

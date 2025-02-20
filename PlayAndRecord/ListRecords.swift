@@ -57,7 +57,7 @@ struct RecordedLast: View {
 }
 
 struct RecordingRow: View {
-    
+
     var audioURL: URL
     
     @ObservedObject var audioPlayer = AudioPlayer()

@@ -1,19 +1,23 @@
 //
-//  AudioApp.swift
+//  RandomTextView.swift
 //  Speeches
 //
-//  Created by Layza Maria Rodrigues Carneiro on 11/12/24.
+//  Created by Layza Maria Rodrigues Carneiro on 20/02/25.
 //
 
 import SwiftUI
 
-struct AudioApp: View {
-    @ObservedObject var audioRecorder: AudioRecorder
-    
+struct RandomTextView: View {
+    @ObservedObject private var audioRecorder = AudioRecorder()
+    let randomText = randomStory()
+
     var body: some View {
         NavigationStack {
             VStack {
-                RecordingsList(audioRecorder: audioRecorder)
+                Text(randomText?.title ?? "")
+                Text(randomText?.text ?? "")
+                
+                Spacer()
                 
                 if audioRecorder.recording == false {
                     Button { self.audioRecorder.startRecording() } label: {
@@ -38,7 +42,6 @@ struct AudioApp: View {
                 }
             }
             .navigationBarTitle("Recordings")
-            .navigationBarItems(trailing: EditButton())
         }
     }
 }

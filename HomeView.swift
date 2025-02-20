@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct HomeView: View {
+    @AppStorage("username") var username: String = ""
+
     var body: some View {
         NavigationStack {
             ZStack {
@@ -33,7 +35,7 @@ struct HomeView: View {
                                 ),
                                 info: "Tongue Twister",
                                 icon: "sparkles",
-                                view: AnyView(AudioApp(audioRecorder: AudioRecorder()))
+                                view: AnyView(TongueTwisterView())
                             )
                             CustomRectangle(
                                 text: "Review your audios",
@@ -44,7 +46,7 @@ struct HomeView: View {
                                 ),
                                 info: "Recordings",
                                 icon: "mic.fill",
-                                view: AnyView(AudioApp(audioRecorder: AudioRecorder()))
+                                view: AnyView(RecordingsView())
                             )
                         }
                         
@@ -59,7 +61,7 @@ struct HomeView: View {
                     .padding()
                 }
             }
-            .navigationTitle("Hi, Layza")
+            .navigationTitle("Hi, \(username)")
         }
     }
 }

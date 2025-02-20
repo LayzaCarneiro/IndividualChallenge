@@ -10,7 +10,7 @@ import AppleProductTypes
 let package = Package(
     name: "Speeches",
     platforms: [
-        .iOS("16.0")
+        .iOS("17.0")
     ],
     products: [
         .iOSApplication(
@@ -45,7 +45,7 @@ let package = Package(
             path: ".",
             resources: [
                 .process("Resources"),
-                .copy("MLFile/Phono.mlmodelc")
+                .copy("ML/Phono.mlmodelc")
             ]
         )
     ]

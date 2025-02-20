@@ -43,9 +43,9 @@ struct RepeatWord: View {
 //                    .cornerRadius(8)
 //            }
             
-//            Spacer()
-//
-//            RecordedLast(audioRecorder: audioRecorder)
+            Spacer()
+
+            RecordedLast(audioRecorder: audioRecorder)
             
             Spacer()
             

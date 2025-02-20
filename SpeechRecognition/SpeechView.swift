@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SpeechRecognitionView: View {
-    @StateObject private var viewModel = SpeechRecognitionViewModel()
+    @ObservedObject var viewModel: SpeechRecognitionViewModel
     
     var body: some View {
         VStack {
@@ -34,5 +34,9 @@ struct SpeechRecognitionView: View {
             viewModel.requestPermissions()
         }
         .padding()
+    }
+    
+    func getRecognizedText() -> String {
+        viewModel.recognizedText
     }
 }
