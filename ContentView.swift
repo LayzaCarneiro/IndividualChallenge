@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct ContentView: View {
-    @AppStorage("hasSeenOnboarding") var firstLaunch: Bool = true
+    @AppStorage("firstLaunch") var firstLaunch: Bool = true
     
     var body: some View {
         ZStack {
             HomeView()
                 .blur(radius: firstLaunch ? 30 : 0)
                 .disabled(firstLaunch)
+                .animation(.easeOut(duration: 0.8), value: firstLaunch)
             OnBoardingView(firstLaunch: $firstLaunch)
         }
     }

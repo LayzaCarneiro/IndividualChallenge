@@ -2,29 +2,15 @@ import SwiftUI
 
 struct HomeView: View {
     @AppStorage("username") var username: String = ""
+    @State private var showProfileView: Bool = false
 
     var body: some View {
         NavigationStack {
             ZStack {
                 ScrollView {
+                    greetingSection
+                    
                     VStack(alignment: .leading, spacing: 30) {
-                        HStack {
-                            Text("Welcome back! Keep practicing.")
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
-                                .padding(.leading, 7)
-                            
-                            Spacer()
-                            
-                            Image(systemName: "person.crop.circle.fill")
-                                .resizable()
-                                .frame(width: 50, height: 50)
-                                .foregroundColor(.black)
-                                .padding(.top, -60)
-                                .padding(.trailing, 7)
-                        }
-                        .padding(.top, -18)
-                        
                         HStack(spacing: 21) {
                             CustomRectangle(
                                 text: "Challenge yourself!",
@@ -60,9 +46,48 @@ struct HomeView: View {
                     }
                     .padding()
                 }
+                .padding(.horizontal, UIDevice.current.userInterfaceIdiom == .pad ? 30 : 20)
+//                .padding(.top, 35)
+                .padding(.vertical, 30)
+                .font(.system(.body, design: .rounded))
+                .sheet(isPresented: $showProfileView) {
+                    ProfileView()
+                }
             }
-            .navigationTitle("Hi, \(username)")
         }
+    }
+    
+    var greetingSection: some View {
+        HStack {
+            VStack(alignment: .leading) {
+                Text("Hi \(username)")
+                    .font(.system(size: 30))
+                    .fontWeight(.bold)
+                Text("Welcome back! Keep practicing.")
+                    .foregroundStyle(.gray)
+            }
+            .padding()
+            
+            Spacer()
+            
+            Button {
+                showProfileView.toggle()
+            } label: {
+                ZStack {
+                    Circle()
+                        .frame(width: 45, height: 45)
+                        .foregroundStyle(.blue)
+                    
+                    Text(username.prefix(1))
+                        .foregroundStyle(.white)
+                        .font(.title2)
+                        .fontWeight(.semibold)
+                }
+            }
+            
+            Spacer().frame(maxWidth: 20)
+        }
+//        .padding(.top)
     }
 }
 
