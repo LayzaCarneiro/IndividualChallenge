@@ -55,7 +55,7 @@ class PhonoTestViewModel: ObservableObject {
 
     private var audioEngine: AVAudioEngine?
     private var audioBuffer = AVAudioPCMBuffer() // Acumulador de buffer
-    private let model = try! Phono() // Carrega o modelo ML
+    private let model = try! PhonoV2() // Carrega o modelo ML
     private var recordingTimer: Timer?
 
     func toggleRecording() {

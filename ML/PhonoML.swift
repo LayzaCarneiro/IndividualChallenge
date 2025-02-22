@@ -1,5 +1,5 @@
 //
-// Phono.swift
+// PhonoV2.swift
 //
 // This file was automatically generated and should not be edited.
 //
@@ -9,7 +9,7 @@ import CoreML
 
 /// Model Prediction Input Type
 @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, visionOS 1.0, *)
-class PhonoInput : MLFeatureProvider {
+class PhonoV2Input : MLFeatureProvider {
 
     /// audioSamples as 15600 element vector of floats
     var audioSamples: MLMultiArray
@@ -36,7 +36,7 @@ class PhonoInput : MLFeatureProvider {
 
 /// Model Prediction Output Type
 @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, visionOS 1.0, *)
-class PhonoOutput : MLFeatureProvider {
+class PhonoV2Output : MLFeatureProvider {
 
     /// Source provided by CoreML
     private let provider : MLFeatureProvider
@@ -71,20 +71,22 @@ class PhonoOutput : MLFeatureProvider {
 
 /// Class for model loading and prediction
 @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, visionOS 1.0, *)
-class Phono {
+class PhonoV2 {
     let model: MLModel
 
     /// URL of model assuming it was installed in the same bundle as this class
     class var urlOfModelInThisBundle : URL {
+//        let resPath = Bundle(for: self).url(forResource: "PhonoV2", withExtension: "mlmodel")!
+//        return try! MLModel.compileModel(at: resPath)
         let bundle = Bundle(for: self)
-        return bundle.url(forResource: "Phono", withExtension:"mlmodelc")!
+        return bundle.url(forResource: "PhonoV2", withExtension:"mlmodelc")!
     }
 
     /**
-        Construct Phono instance with an existing MLModel object.
+        Construct PhonoV2 instance with an existing MLModel object.
 
-        Usually the application does not use this initializer unless it makes a subclass of Phono.
-        Such application may want to use `MLModel(contentsOfURL:configuration:)` and `Phono.urlOfModelInThisBundle` to create a MLModel object to pass-in.
+        Usually the application does not use this initializer unless it makes a subclass of PhonoV2.
+        Such application may want to use `MLModel(contentsOfURL:configuration:)` and `PhonoV2.urlOfModelInThisBundle` to create a MLModel object to pass-in.
 
         - parameters:
           - model: MLModel object
@@ -106,7 +108,7 @@ class Phono {
     }
 
     /**
-        Construct Phono instance with explicit path to mlmodelc file
+        Construct PhonoV2 instance with explicit path to mlmodelc file
         - parameters:
            - modelURL: the file url of the model
 
@@ -130,7 +132,7 @@ class Phono {
     }
 
     /**
-        Construct Phono instance asynchronously with optional configuration.
+        Construct PhonoV2 instance asynchronously with optional configuration.
 
         Model loading may take time when the model content is not immediately available (e.g. encrypted model). Use this factory method especially when the caller is on the main thread.
 
@@ -138,24 +140,24 @@ class Phono {
           - configuration: the desired model configuration
           - handler: the completion handler to be called when the model loading completes successfully or unsuccessfully
     */
-    class func load(configuration: MLModelConfiguration = MLModelConfiguration(), completionHandler handler: @escaping (Swift.Result<Phono, Error>) -> Void) {
+    class func load(configuration: MLModelConfiguration = MLModelConfiguration(), completionHandler handler: @escaping (Swift.Result<PhonoV2, Error>) -> Void) {
         load(contentsOf: self.urlOfModelInThisBundle, configuration: configuration, completionHandler: handler)
     }
 
     /**
-        Construct Phono instance asynchronously with optional configuration.
+        Construct PhonoV2 instance asynchronously with optional configuration.
 
         Model loading may take time when the model content is not immediately available (e.g. encrypted model). Use this factory method especially when the caller is on the main thread.
 
         - parameters:
           - configuration: the desired model configuration
     */
-    class func load(configuration: MLModelConfiguration = MLModelConfiguration()) async throws -> Phono {
+    class func load(configuration: MLModelConfiguration = MLModelConfiguration()) async throws -> PhonoV2 {
         try await load(contentsOf: self.urlOfModelInThisBundle, configuration: configuration)
     }
 
     /**
-        Construct Phono instance asynchronously with URL of the .mlmodelc directory with optional configuration.
+        Construct PhonoV2 instance asynchronously with URL of the .mlmodelc directory with optional configuration.
 
         Model loading may take time when the model content is not immediately available (e.g. encrypted model). Use this factory method especially when the caller is on the main thread.
 
@@ -164,19 +166,19 @@ class Phono {
           - configuration: the desired model configuration
           - handler: the completion handler to be called when the model loading completes successfully or unsuccessfully
     */
-    class func load(contentsOf modelURL: URL, configuration: MLModelConfiguration = MLModelConfiguration(), completionHandler handler: @escaping (Swift.Result<Phono, Error>) -> Void) {
+    class func load(contentsOf modelURL: URL, configuration: MLModelConfiguration = MLModelConfiguration(), completionHandler handler: @escaping (Swift.Result<PhonoV2, Error>) -> Void) {
         MLModel.load(contentsOf: modelURL, configuration: configuration) { result in
             switch result {
             case .failure(let error):
                 handler(.failure(error))
             case .success(let model):
-                handler(.success(Phono(model: model)))
+                handler(.success(PhonoV2(model: model)))
             }
         }
     }
 
     /**
-        Construct Phono instance asynchronously with URL of the .mlmodelc directory with optional configuration.
+        Construct PhonoV2 instance asynchronously with URL of the .mlmodelc directory with optional configuration.
 
         Model loading may take time when the model content is not immediately available (e.g. encrypted model). Use this factory method especially when the caller is on the main thread.
 
@@ -184,9 +186,9 @@ class Phono {
           - modelURL: the URL to the model
           - configuration: the desired model configuration
     */
-    class func load(contentsOf modelURL: URL, configuration: MLModelConfiguration = MLModelConfiguration()) async throws -> Phono {
+    class func load(contentsOf modelURL: URL, configuration: MLModelConfiguration = MLModelConfiguration()) async throws -> PhonoV2 {
         let model = try await MLModel.load(contentsOf: modelURL, configuration: configuration)
-        return Phono(model: model)
+        return PhonoV2(model: model)
     }
 
     /**
@@ -195,13 +197,13 @@ class Phono {
         It uses the default function if the model has multiple functions.
 
         - parameters:
-           - input: the input to the prediction as PhonoInput
+           - input: the input to the prediction as PhonoV2Input
 
         - throws: an NSError object that describes the problem
 
-        - returns: the result of the prediction as PhonoOutput
+        - returns: the result of the prediction as PhonoV2Output
     */
-    func prediction(input: PhonoInput) throws -> PhonoOutput {
+    func prediction(input: PhonoV2Input) throws -> PhonoV2Output {
         try prediction(input: input, options: MLPredictionOptions())
     }
 
@@ -211,16 +213,16 @@ class Phono {
         It uses the default function if the model has multiple functions.
 
         - parameters:
-           - input: the input to the prediction as PhonoInput
+           - input: the input to the prediction as PhonoV2Input
            - options: prediction options
 
         - throws: an NSError object that describes the problem
 
-        - returns: the result of the prediction as PhonoOutput
+        - returns: the result of the prediction as PhonoV2Output
     */
-    func prediction(input: PhonoInput, options: MLPredictionOptions) throws -> PhonoOutput {
+    func prediction(input: PhonoV2Input, options: MLPredictionOptions) throws -> PhonoV2Output {
         let outFeatures = try model.prediction(from: input, options: options)
-        return PhonoOutput(features: outFeatures)
+        return PhonoV2Output(features: outFeatures)
     }
 
     /**
@@ -229,17 +231,17 @@ class Phono {
         It uses the default function if the model has multiple functions.
 
         - parameters:
-           - input: the input to the prediction as PhonoInput
+           - input: the input to the prediction as PhonoV2Input
            - options: prediction options
 
         - throws: an NSError object that describes the problem
 
-        - returns: the result of the prediction as PhonoOutput
+        - returns: the result of the prediction as PhonoV2Output
     */
     @available(macOS 14.0, iOS 17.0, tvOS 17.0, watchOS 10.0, visionOS 1.0, *)
-    func prediction(input: PhonoInput, options: MLPredictionOptions = MLPredictionOptions()) async throws -> PhonoOutput {
+    func prediction(input: PhonoV2Input, options: MLPredictionOptions = MLPredictionOptions()) async throws -> PhonoV2Output {
         let outFeatures = try await model.prediction(from: input, options: options)
-        return PhonoOutput(features: outFeatures)
+        return PhonoV2Output(features: outFeatures)
     }
 
     /**
@@ -252,10 +254,10 @@ class Phono {
 
         - throws: an NSError object that describes the problem
 
-        - returns: the result of the prediction as PhonoOutput
+        - returns: the result of the prediction as PhonoV2Output
     */
-    func prediction(audioSamples: MLMultiArray) throws -> PhonoOutput {
-        let input_ = PhonoInput(audioSamples: audioSamples)
+    func prediction(audioSamples: MLMultiArray) throws -> PhonoV2Output {
+        let input_ = PhonoV2Input(audioSamples: audioSamples)
         return try prediction(input: input_)
     }
 
@@ -269,11 +271,11 @@ class Phono {
 
         - throws: an NSError object that describes the problem
 
-        - returns: the result of the prediction as PhonoOutput
+        - returns: the result of the prediction as PhonoV2Output
     */
 
-    func prediction(audioSamples: MLShapedArray<Float>) throws -> PhonoOutput {
-        let input_ = PhonoInput(audioSamples: audioSamples)
+    func prediction(audioSamples: MLShapedArray<Float>) throws -> PhonoV2Output {
+        let input_ = PhonoV2Input(audioSamples: audioSamples)
         return try prediction(input: input_)
     }
 
@@ -283,21 +285,21 @@ class Phono {
         It uses the default function if the model has multiple functions.
 
         - parameters:
-           - inputs: the inputs to the prediction as [PhonoInput]
+           - inputs: the inputs to the prediction as [PhonoV2Input]
            - options: prediction options
 
         - throws: an NSError object that describes the problem
 
-        - returns: the result of the prediction as [PhonoOutput]
+        - returns: the result of the prediction as [PhonoV2Output]
     */
-    func predictions(inputs: [PhonoInput], options: MLPredictionOptions = MLPredictionOptions()) throws -> [PhonoOutput] {
+    func predictions(inputs: [PhonoV2Input], options: MLPredictionOptions = MLPredictionOptions()) throws -> [PhonoV2Output] {
         let batchIn = MLArrayBatchProvider(array: inputs)
         let batchOut = try model.predictions(from: batchIn, options: options)
-        var results : [PhonoOutput] = []
+        var results : [PhonoV2Output] = []
         results.reserveCapacity(inputs.count)
         for i in 0..<batchOut.count {
             let outProvider = batchOut.features(at: i)
-            let result =  PhonoOutput(features: outProvider)
+            let result =  PhonoV2Output(features: outProvider)
             results.append(result)
         }
         return results

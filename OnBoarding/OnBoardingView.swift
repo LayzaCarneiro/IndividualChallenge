@@ -9,7 +9,7 @@ import SwiftUI
 
 struct OnBoardingView: View {
     @Binding var firstLaunch: Bool
-    @AppStorage("username") var username: String = "Buddy"
+    @AppStorage("username") var username: String = ""
     
     var body: some View {
         VStack {

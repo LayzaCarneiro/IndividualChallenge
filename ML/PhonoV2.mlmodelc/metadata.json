@@ -1,7 +1,6 @@
 [
   {
     "metadataOutputVersion" : "3.0",
-    "shortDescription" : "Classify phonemes",
     "outputSchema" : [
       {
         "isOptional" : "0",
@@ -62,20 +61,23 @@
       }
     ],
     "classLabels" : [
+      "ch",
+      "g",
       "l",
       "r",
       "s",
       "sh",
+      "z",
       "ð",
       "θ"
     ],
-    "generatedClassName" : "Phono",
+    "generatedClassName" : "PhonoV2",
     "userDefinedMetadata" : {
-      "com.apple.createml.version" : "15.0.0",
       "com.apple.createml.app.tag" : "150",
-      "sampleRate" : "16000",
+      "com.apple.createml.version" : "15.0.0",
+      "com.apple.coreml.model.preview.type" : "soundClassifier",
       "com.apple.createml.app.version" : "6.0 Beta",
-      "com.apple.coreml.model.preview.type" : "soundClassifier"
+      "sampleRate" : "16000"
     },
     "method" : "predict"
   }

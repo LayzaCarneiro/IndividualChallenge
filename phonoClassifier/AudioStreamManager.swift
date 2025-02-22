@@ -58,7 +58,7 @@ class AudioStreamManager {
     
     private func classifierSetup() {
         let defaultConfig = MLModelConfiguration()
-        let soundClassifier = try? Phono(configuration: defaultConfig)
+        let soundClassifier = try? PhonoV2(configuration: defaultConfig)
         
         guard let soundClassifier = soundClassifier else{
             fatalError("Could not instantiate sound classifier")

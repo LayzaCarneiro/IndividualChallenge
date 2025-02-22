@@ -32,35 +32,29 @@ class PhonemeViewModel: ObservableObject {
             TipModel(title: "3. Vibration", description: "Feel a slight vibration in your throat as you blow air.")
         ], words: ["the", "either", "breathe", "therefore"], soundFile: "th_voice"),
         
-        Phoneme(letter: "r", symbol: "/r/", description: "red", tips: [
+        Phoneme(letter: "r", symbol: "/r/", description: "ring", tips: [
             TipModel(title: "1. Lips", description: "Slightly round your lips."),
             TipModel(title: "2. Tongue", description: "Curl the tip of your tongue upward, without touching the roof of the mouth."),
             TipModel(title: "3. Vibration", description: "Let air flow freely without any friction.")
-        ], words: ["store", "third", "track", "start"], soundFile: "r"),
+        ], words: ["store", "third", "track", "start", "ring", "rocket"], soundFile: "r"),
         
         Phoneme(letter: "l", symbol: "/l/", description: "leaf", tips: [
             TipModel(title: "1. Lips", description: "Relax your lips."),
             TipModel(title: "2. Tongue", description: "Press the tip of your tongue against the ridge behind your upper front teeth."),
             TipModel(title: "3. Sound", description: "Let air flow around the sides of your tongue.")
         ], words: ["like", "fall", "help", "please", "close"], soundFile: "l"),
-        
-        Phoneme(letter: "k", symbol: "/k/", description: "key", tips: [
-            TipModel(title: "1. Lips", description: "Keep your lips relaxed."),
-            TipModel(title: "2. Tongue", description: "Raise the back of your tongue against the soft part of the roof of the mouth."),
-            TipModel(title: "3. Stop", description: "Release the air quickly to produce a 'k' sound.")
-        ], words: ["kind", "cry", "occupy", "quit", "back", "clear", "scare"], soundFile: "s"),
-        
-        Phoneme(letter: "ch", symbol: "/ʧ/", description: "change", tips: [
+
+        Phoneme(letter: "ch", symbol: "/ʧ/", description: "cheese", tips: [
             TipModel(title: "1. Lips", description: "Round your lips slightly."),
             TipModel(title: "2. Tongue", description: "Touch the tip of your tongue to the roof of your mouth briefly."),
             TipModel(title: "3. Sound", description: "Combine a 't' and 'sh' sound as you release the air.")
         ], words: ["choose", "which", "watch", "change"], soundFile: "s"),
         
-        Phoneme(letter: "g", symbol: "/g/", description: "go", tips: [
+        Phoneme(letter: "ʒ", symbol: "/ʒ/", description: "treasure", tips: [
             TipModel(title: "1. Lips", description: "Relax your lips."),
             TipModel(title: "2. Tongue", description: "Press the back of your tongue against the roof of your mouth."),
             TipModel(title: "3. Vibration", description: "Feel the vibration in your throat as you release the air.")
-        ], words: ["flag", "glow", "green", "again"], soundFile: "s"),
+        ], words: ["genre", "pleasure", "beige"], soundFile: "s"),
         
         Phoneme(letter: "z", symbol: "/z/", description: "zebra", tips: [
             TipModel(title: "1. Lips", description: "Spread your lips slightly."),

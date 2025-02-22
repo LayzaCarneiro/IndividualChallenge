@@ -9,39 +9,31 @@ import SwiftUI
 
 struct ExerciseCarousel: View {
     let phoneme: Phoneme
-    let items = ["Red"]
-
-    var body: some View {
-        TabView {
-            ForEach(0..<items.count, id: \.self) { index in
-                Rectangle()
-                    .fill(getColor(for: items[index]))
-                    .shadow(radius: 5)
-                    .overlay(
-                        VStack {
-                            MiniVideoView(phoneme: phoneme)
-                                .padding(.bottom, -20)
-                            
-                            TipComponent(tip: phoneme.tips[0])
-                            TipComponent(tip: phoneme.tips[1])
-                            TipComponent(tip: phoneme.tips[2])
-
-                        }
-                    )
-            }
-        }
-        .tabViewStyle(PageTabViewStyle())
-        .frame(width: 600, height: 750)
-        .cornerRadius(10)
-    }
     
-    func getColor(for item: String) -> Color {
-        switch item {
-        case "Red": return .orange
-        default: return .gray
+    var body: some View {
+        GeometryReader { geometry in
+            Rectangle()
+                .fill(.orange)
+                .shadow(radius: 5)
+                .overlay(
+                    VStack {
+                        MiniVideoView(phoneme: phoneme)
+                            .padding(.bottom, -20)
+                        
+                        TipComponent(tip: phoneme.tips[0])
+                        TipComponent(tip: phoneme.tips[1])
+                        TipComponent(tip: phoneme.tips[2])
+                        
+                    }
+                )
+                .padding()
+                .frame(width: geometry.size.width * 0.9, height: geometry.size.height * 1)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .cornerRadius(10)
         }
     }
 }
+
 
 //struct CarouselView_Previews: PreviewProvider {
 //    static var previews: some View {

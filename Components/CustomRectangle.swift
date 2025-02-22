@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct CustomRectangle: View {
-    let text: String
     let gradient: LinearGradient
-    let info: String
-    @State var icon: String = ""
-    @State var subtitle: String = ""
+    let title: String
+    let imageName: String
+    let icon: String 
+    let subtitle: String
     @State var view: AnyView
     
     var body: some View {
@@ -20,38 +20,44 @@ struct CustomRectangle: View {
             destination: view,
             label: {
                 ZStack {
-                    Rectangle()
-                        .fill(gradient)
-                        .frame(width: 387, height: 180)
-                        .cornerRadius(10)
-                        .shadow(radius: 5)
+                    if(UIDevice.current.userInterfaceIdiom == .pad) {
+                        Rectangle()
+                            .fill(gradient)
+                            .frame(width: 232, height: 180)
+                            .cornerRadius(20)
+                            .shadow(radius: 5)
+                    } else {
+                        Rectangle()
+                            .fill(gradient)
+                            .frame(width: 100, height: 80)
+                            .cornerRadius(20)
+                            .shadow(radius: 5)
+                    }
                     
-                    VStack(spacing: 8) {
-                        
-                        HStack(spacing: 10) {
-                            Image(systemName: icon)
-                                .font(.system(size: 33, weight: .bold))
-                                .foregroundStyle(.white)
-                                .opacity(0.9)
-                            
-                            Text(info)
-                                .font(.system(size: 40, weight: .bold))
-                                .foregroundStyle(.white)
-                        }
-                        .padding(.trailing, 25)
-                        
-                        Text(text)
+                    VStack {
+                        Text(title)
                             .font(.title2)
-                            .fontWeight(.semibold)
+                            .fontWeight(.bold)
                             .foregroundColor(.white)
                         
-                        if subtitle != "" {
+                        Image(imageName)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 90, height: 40)
+                        
+                        HStack {
+                            Image(systemName: icon)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 22, height: 22)
+                                .foregroundColor(.white)
+                            
                             Text(subtitle)
                                 .font(.subheadline)
-                                .foregroundColor(.white.opacity(0.8))
+                                .fontWeight(.semibold)
+                                .foregroundColor(.white)
                         }
                     }
-                    .padding()
                 }
             }
         )

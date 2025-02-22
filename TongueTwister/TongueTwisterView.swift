@@ -30,15 +30,16 @@ class SpeechSynthesizer: ObservableObject {
 struct TongueTwisterView: View {
     @StateObject private var viewModel = SpeechRecognitionViewModel()
     @StateObject private var speechSynthesizer = SpeechSynthesizer()
+    @StateObject private var tongueTwisterVM = TongueTwisterViewModel()
 
-    @State private var tongueTwister: String = randomTongueTwister() ?? "Loading..."
+    @State var tongueTwister: TongueTwisterModel = TongueTwisterModel(title: "", text: "Loading...")
     @State private var accuracy: Double = 0.0
     @State private var accuracyData: [AccuracyEntry] = []
 
     var body: some View {
         VStack {
             Button {
-                tongueTwister = randomTongueTwister() ?? "Try again!"
+                tongueTwister = tongueTwisterVM.randomTongueTwister() ?? TongueTwisterModel(title: "", text: "Loading...")
                 accuracy = 0.0
                 viewModel.recognizedText = ""
             } label: {
@@ -53,14 +54,14 @@ struct TongueTwisterView: View {
             }
             .padding(.horizontal)
             
-            Text(tongueTwister)
+            Text(tongueTwister.text)
                 .multilineTextAlignment(.leading)
                 .padding()
             
             SpeechRecognitionView(viewModel: viewModel)
             
             Button("🔊 Listen") {
-                speechSynthesizer.speak(tongueTwister)
+                speechSynthesizer.speak(tongueTwister.text)
             }
             .padding()
             .background(Color.blue)
@@ -78,8 +79,11 @@ struct TongueTwisterView: View {
                 .font(.title)
                 .bold()
         }
-        .onChange(of: viewModel.recognizedText) { newValue in
-            accuracy = percentage(original: tongueTwister, recognized: newValue)
+        .onAppear {
+            tongueTwister = tongueTwisterVM.randomTongueTwister()!
+        }
+        .onChange(of: viewModel.recognizedText) { newValue, _ in
+            accuracy = percentage(original: tongueTwister.text, recognized: newValue)
         }
     }
     

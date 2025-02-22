@@ -20,7 +20,7 @@ struct PhonemeDetailView: View {
             )
             .edgesIgnoringSafeArea(.all)
 
-            VStack(spacing: 16) {
+            VStack {
                 Text(phoneme.symbol)
                     .font(.system(size: 60, weight: .bold, design: .rounded))
                     .foregroundColor(.blue)
@@ -33,7 +33,6 @@ struct PhonemeDetailView: View {
                     .padding(.bottom, 16)
 
                 ExerciseCarousel(phoneme: phoneme)
-                    .padding(.top, 15)
                 
                 Spacer()
 

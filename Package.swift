@@ -8,13 +8,13 @@ import PackageDescription
 import AppleProductTypes
 
 let package = Package(
-    name: "Speeches",
+    name: "Phono",
     platforms: [
         .iOS("17.0")
     ],
     products: [
         .iOSApplication(
-            name: "Speeches",
+            name: "Phono",
             targets: ["AppModule"],
             bundleIdentifier: "Academy.Speeches",
             teamIdentifier: "ZFH4AF7HSL",
@@ -43,7 +43,7 @@ let package = Package(
             path: ".",
             resources: [
                 .process("Resources"),
-                .copy("ML/Phono.mlmodelc")
+                .copy("ML/PhonoV2.mlmodelc")
             ]
         )
     ]

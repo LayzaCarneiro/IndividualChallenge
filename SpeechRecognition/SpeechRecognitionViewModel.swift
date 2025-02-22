@@ -32,7 +32,27 @@ class SpeechRecognitionViewModel: ObservableObject {
         }
     }
     
+    func showAlert(title: String, message: String) {
+        DispatchQueue.main.async {
+            if let topViewController = UIApplication.shared.connectedScenes
+                .compactMap({ ($0 as? UIWindowScene)?.keyWindow?.rootViewController })
+                .first {
+                
+                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                topViewController.present(alert, animated: true)
+            }
+        }
+    }
+    
     func startRecognition() {
+        #if targetEnvironment(simulator)
+        DispatchQueue.main.async {
+            self.showAlert(title: "Speech recognizer not available.", message: "Speech recognizer does not work in the simulator. Test on a physical device.")
+        }
+        return
+        #endif
+        
         guard let speechRecognizer = speechRecognizer, speechRecognizer.isAvailable else {
             print("Speech recognizer not available.")
             return
