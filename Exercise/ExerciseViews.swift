@@ -8,10 +8,19 @@
 import SwiftUI
 
 struct ExerciseListView: View {
+    @State private var isShowConfirmEndExercise = false
+
     let phoneme: Phoneme
 
     var body: some View {
         VStack {
+            Button {
+                isShowConfirmEndExercise.toggle()
+            } label: {
+                Text("exit")
+                    .font(.largeTitle)
+            }
+            
             Text("Exercises for \(phoneme.symbol)")
                 .font(.title)
                 .fontWeight(.bold)

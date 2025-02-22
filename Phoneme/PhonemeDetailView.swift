@@ -8,60 +8,128 @@
 import SwiftUI
 
 struct PhonemeDetailView: View {
+    @Environment(\.dismiss) var dismiss
+    @Binding var isExerciseViewPresented: Bool
+    
     @State var isPresented: Bool = false
     let phoneme: Phoneme
-
+    
     var body: some View {
-        ZStack {
-            LinearGradient(
-                gradient: Gradient(colors: [Color.blue.opacity(0.3), Color.orange.opacity(0.5)]),
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .edgesIgnoringSafeArea(.all)
-
-            VStack {
-                Text(phoneme.symbol)
-                    .font(.system(size: 60, weight: .bold, design: .rounded))
-                    .foregroundColor(.blue)
-                    .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 5)
-                    .padding()
-
-                Text("Example word: \(phoneme.description)")
-                    .font(.title3)
-                    .foregroundColor(.blue)
-                    .padding(.bottom, 16)
-
-                ExerciseCarousel(phoneme: phoneme)
-                
-                Spacer()
-
-                Button {
-                    isPresented = true
-                } label: {
-                    Text("Start Exercises")
-                        .fontWeight(.bold)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(
-                            LinearGradient(
-                                gradient: Gradient(colors: [Color.blue, Color.blue]),
-                                startPoint: .leading,
-                                endPoint: .trailing
-                            )
-                        )
-                        .foregroundColor(.white)
-                        .cornerRadius(15)
-                        .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 5)
-                }
-                .padding()
-                .fullScreenCover(isPresented: $isPresented) {
-                    ExerciseView(viewModel: ExerciseViewModel(), phoneme: phoneme)
+        NavigationView {
+            ScrollView {
+                ZStack {
+                    Color("offWhite").ignoresSafeArea()
+                    
+                    VStack {
+                        phonemeIcon
+                        phonemeTutorial
+                        phonemeTips
+                        startExerciseButton
+                    }
                 }
             }
-            .padding()
+            .navigationTitle("Phoneme")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    doneButton
+                }
+            }
         }
-        .navigationTitle(phoneme.symbol)
-        .navigationBarTitleDisplayMode(.inline)
+    }
+    
+    private var phonemeIcon: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 10)
+                .fill(
+                    LinearGradient(
+                        colors: [Color.blue, Color.cyan],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                )
+                .frame(width: 540, height: 100)
+                .padding(.horizontal)
+            
+            VStack {
+                Text(phoneme.symbol)
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .foregroundStyle(.white)
+                Text(phoneme.description)
+                    .font(.body)
+                    .foregroundStyle(.white)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding(.horizontal)
+            .padding(.vertical)
+        }
+        
+    }
+    
+    private var phonemeTutorial: some View {
+        VStack(alignment: .leading) {
+            Text("How to make the sound")
+                .font(.system(size: 24, weight: .bold))
+            
+            RoundedRectangle(cornerRadius: 10)
+                .fill(Color("offWhite"))
+                .stroke(.black)
+                .frame(width: 540, height: 220)
+                .overlay(
+                    MiniVideoView(phoneme: phoneme)
+                        .padding(.top, 30)
+                )
+        }
+    }
+    
+    private var phonemeTips: some View {
+        VStack(alignment: .leading) {
+            Text("Tips")
+                .font(.system(size: 24, weight: .bold))
+            
+            RoundedRectangle(cornerRadius: 10)
+                .fill(Color("offWhite"))
+                .stroke(.black)
+                .frame(width: 540, height: 220)
+                .overlay(
+                    VStack(alignment: .leading) {
+                        HStack(alignment: .top) {
+                            Text(phoneme.tips[0].title)
+                            Text(phoneme.tips[0].description)
+                        }
+                        HStack(alignment: .top) {
+                            Text(phoneme.tips[1].title)
+                            Text(phoneme.tips[1].description)
+                        }
+                        HStack(alignment: .top) {
+                            Text(phoneme.tips[2].title)
+                            Text(phoneme.tips[2].description)
+                        }
+                    }
+                    .padding()
+                )
+        }
+    }
+    
+    private var startExerciseButton: some View {
+        Button {
+            self.isExerciseViewPresented = true
+            dismiss()
+        } label: {
+            Text("Start Exercise")
+                .padding(.vertical,15)
+                .frame(minWidth: 100, maxWidth: .infinity, minHeight: 44)
+                .controlSize(.large)
+                .fontWeight(.bold)
+                .foregroundStyle(.red)
+                .cornerRadius(15)
+        }
+    }
+    
+    private var doneButton: some View {
+        Button("Done") {
+            dismiss()
+        }
     }
 }

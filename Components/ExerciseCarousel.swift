@@ -33,10 +33,3 @@ struct ExerciseCarousel: View {
         }
     }
 }
-
-
-//struct CarouselView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ExerciseCarousel(phoneme: Phoneme(symbol: "s", description: "ss"))
-//    }
-//}

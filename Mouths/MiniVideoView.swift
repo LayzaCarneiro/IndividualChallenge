@@ -20,39 +20,7 @@ struct MiniVideoView: View {
     let timer = Timer.publish(every: 0.2, on: .main, in: .common).autoconnect()
     
     var body: some View {
-        VStack {
-            HStack {
-                if audioPlayer.isPlaying == false {
-                    Button {
-                        if !isPlaying {
-                            isPlaying = true
-                            loopCount = 0
-                        }
-                        self.audioPlayer.startPlayback(audio: Bundle.main.url(forResource: phoneme.soundFile, withExtension: "m4a")!)
-                    } label: {
-                        Image(systemName: "play.circle.fill")
-                            .resizable()
-                            .frame(width: 50, height: 50)
-                            .foregroundColor(.blue)
-                            .padding(.top, 20)
-                    }
-                } else {
-                    Button {
-                        if !isPlaying {
-                            isPlaying = true
-                            loopCount = 0
-                        }
-                        self.audioPlayer.stopPlayback()
-                    } label: {
-                        Image(systemName: "stop.circle.fill")
-                            .resizable()
-                            .frame(width: 50, height: 50)
-                            .foregroundColor(.blue)
-                            .padding(.top, 20)
-                    }
-                }
-            }
-            
+        ZStack {
             Image(images[currentIndex])
                 .resizable()
                 .scaledToFit()
@@ -71,6 +39,36 @@ struct MiniVideoView: View {
                         loopCount = 0
                     }
                 }
+            
+            HStack {
+                if audioPlayer.isPlaying == false {
+                    Button {
+                        if !isPlaying {
+                            isPlaying = true
+                            loopCount = 0
+                        }
+                        self.audioPlayer.startPlayback(audio: Bundle.main.url(forResource: phoneme.soundFile, withExtension: "m4a")!)
+                    } label: {
+                        Image(systemName: "play.circle.fill")
+                            .resizable()
+                            .frame(width: 50, height: 50)
+                            .foregroundColor(.blue)
+                    }
+                } else {
+                    Button {
+                        if !isPlaying {
+                            isPlaying = true
+                            loopCount = 0
+                        }
+                        self.audioPlayer.stopPlayback()
+                    } label: {
+                        Image(systemName: "stop.circle.fill")
+                            .resizable()
+                            .frame(width: 50, height: 50)
+                            .foregroundColor(.blue)
+                    }
+                }
+            }
         }
     }
 }

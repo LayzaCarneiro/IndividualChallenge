@@ -32,14 +32,14 @@ struct TongueTwisterView: View {
     @StateObject private var speechSynthesizer = SpeechSynthesizer()
     @StateObject private var tongueTwisterVM = TongueTwisterViewModel()
 
-    @State var tongueTwister: TongueTwisterModel = TongueTwisterModel(title: "", text: "Loading...")
+    @State var tongueTwister: TongueTwisterModel = TongueTwisterModel(title: "", text: "Loading...", phonemes: [])
     @State private var accuracy: Double = 0.0
     @State private var accuracyData: [AccuracyEntry] = []
 
     var body: some View {
         VStack {
             Button {
-                tongueTwister = tongueTwisterVM.randomTongueTwister() ?? TongueTwisterModel(title: "", text: "Loading...")
+                tongueTwister = tongueTwisterVM.randomTongueTwister() ?? TongueTwisterModel(title: "", text: "Loading...", phonemes: [])
                 accuracy = 0.0
                 viewModel.recognizedText = ""
             } label: {

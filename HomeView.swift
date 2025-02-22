@@ -3,66 +3,73 @@ import SwiftUI
 struct HomeView: View {
     @AppStorage("username") var username: String = "Little Person"
     @State private var showProfileView: Bool = false
-    
+    @State private var isExerciseViewPresented: Bool = false
+    @State private var phonemeExercise: Phoneme = Phoneme(letter: "s", symbol: "/s/", description: "", tips: [], words: [], soundFile: "s.mp4")
+
     var body: some View {
         NavigationStack {
             ZStack {
                 Color("offWhite").ignoresSafeArea()
                 
-                ScrollView {
-                    greetingSection
-                    
-                    VStack(alignment: .leading) {
-                        HStack(spacing: 11) {
-                            CustomRectangle(gradient: LinearGradient(
-                                colors: [Color.blue, Color.cyan],
-                                startPoint: .top,
-                                endPoint: .bottom),
-                                title: "Tongue Twister",
-                                imageName: "mouth 0",
-                                icon: "sparkles",
-                                subtitle: "Challenge yourself!",
-                                view: AnyView(TongueTwisterView())
-                            )
-                            
-                            CustomRectangle(gradient: LinearGradient(
-                                colors: [Color("lightYellow"), Color("darkYellow")],
-                                startPoint: .top,
-                                endPoint: .bottom),
-                                title: "Review your audios",
-                                imageName: "mouth 0",
-                                icon: "microphone.fill",
-                                subtitle: "Review your audios",
-                                view: AnyView(RecordingsView())
-                            )
-                            
-                            WeekView()
-                        }
-                        
-                        Text("Phonemes")
-                            .font(.title)
-                            .fontWeight(.bold)
-                            .padding(.top, 20)
-                        
-                        PhonemeListView()
-                        
-                        Text("Tongue Twisters")
-                            .font(.title)
-                            .fontWeight(.bold)
-                            .padding(.top, 20)
-                        
-                        TongueTwisterListView()
-                        
-                        
-                    }
-                    .padding()
+                if(isExerciseViewPresented) {
+                    ExerciseListView(phoneme: phonemeExercise)
                 }
-                .padding(.horizontal, UIDevice.current.userInterfaceIdiom == .pad ? 30 : 20)
-                //                .padding(.top, 35)
-                .padding(.vertical, 30)
-                .font(.system(.body, design: .rounded))
-                .sheet(isPresented: $showProfileView) {
-                    ProfileView()
+                else {
+                    ScrollView {
+                        greetingSection
+                        
+                        VStack(alignment: .leading) {
+                            HStack(spacing: 11) {
+                                CustomRectangle(gradient: LinearGradient(
+                                    colors: [Color.blue, Color.cyan],
+                                    startPoint: .top,
+                                    endPoint: .bottom),
+                                                title: "Tongue Twister",
+                                                imageName: "mouth 0",
+                                                icon: "sparkles",
+                                                subtitle: "Challenge yourself!",
+                                                view: AnyView(TongueTwisterView())
+                                )
+                                
+                                CustomRectangle(gradient: LinearGradient(
+                                    colors: [Color("lightYellow"), Color("darkYellow")],
+                                    startPoint: .top,
+                                    endPoint: .bottom),
+                                                title: "Review your audios",
+                                                imageName: "mouth 0",
+                                                icon: "microphone.fill",
+                                                subtitle: "Review your audios",
+                                                view: AnyView(RecordingsView())
+                                )
+                            
+                                WeekView()
+                            }
+                            
+                            Text("Phonemes")
+                                .font(.title)
+                                .fontWeight(.bold)
+                                .padding(.top, 20)
+                            
+                            PhonemeListView(isExerciseViewPresented: $isExerciseViewPresented, phonemeExercise: $phonemeExercise)
+                            
+                            Text("Tongue Twisters")
+                                .font(.title)
+                                .fontWeight(.bold)
+                                .padding(.top, 20)
+                            
+                            TongueTwisterListView()
+                            
+                            
+                        }
+                        .padding()
+                    }
+                    .padding(.horizontal, UIDevice.current.userInterfaceIdiom == .pad ? 30 : 20)
+                    //                .padding(.top, 35)
+                    .padding(.vertical, 30)
+                    .font(.system(.body, design: .rounded))
+                    .sheet(isPresented: $showProfileView) {
+                        ProfileView()
+                    }
                 }
             }
             .padding()
