@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RandomTextView: View {
     @ObservedObject private var audioRecorder = AudioRecorder()
-    let randomText = randomStory()
+    @State var randomText = randomStory()
     
     var body: some View {
         NavigationStack {
@@ -25,6 +25,16 @@ struct RandomTextView: View {
             }
         }
         .navigationBarTitle("Recordings")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    randomText = randomStory()
+                } label: {
+                    Image(systemName: "arrow.clockwise")
+                        .font(.title2)
+                }
+            }
+        }
     }
     
     private var text: some View {

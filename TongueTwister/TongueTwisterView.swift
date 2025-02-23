@@ -42,7 +42,7 @@ struct TongueTwisterView: View {
             Color("offWhite").edgesIgnoringSafeArea(.all)
             
             VStack {
-                newTongueTwister
+//                newTongueTwister
                 tongueTwisterText
                 SpeechRecognitionView(viewModel: viewModel)
                 listenButton
@@ -53,6 +53,18 @@ struct TongueTwisterView: View {
 
         }
         .navigationTitle("Tongue Twister")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    tongueTwister = tongueTwisterVM.randomTongueTwister()!
+                    accuracy = 0.0
+                    viewModel.recognizedText = ""
+                } label: {
+                    Image(systemName: "arrow.clockwise")
+                        .font(.title2)
+                }
+            }
+        }
         .onAppear {
             tongueTwister = tongueTwisterVM.randomTongueTwister()!
         }
