@@ -90,21 +90,14 @@ struct PhonemeDetailView: View {
             RoundedRectangle(cornerRadius: 10)
                 .fill(Color("offWhite"))
                 .stroke(.black)
-                .frame(width: 540, height: 220)
+                .frame(width: 540, height: 280)
                 .overlay(
                     VStack(alignment: .leading) {
-                        HStack(alignment: .top) {
-                            Text(phoneme.tips[0].title)
-                            Text(phoneme.tips[0].description)
-                        }
-                        HStack(alignment: .top) {
-                            Text(phoneme.tips[1].title)
-                            Text(phoneme.tips[1].description)
-                        }
-                        HStack(alignment: .top) {
-                            Text(phoneme.tips[2].title)
-                            Text(phoneme.tips[2].description)
-                        }
+                        TipComponent(tip: phoneme.tips[0])
+                        TipComponent(tip: phoneme.tips[1])
+                        TipComponent(tip: phoneme.tips[2])
+                        
+                        Spacer()
                     }
                     .padding()
                 )

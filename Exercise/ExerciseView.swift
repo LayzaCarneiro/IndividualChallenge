@@ -14,6 +14,8 @@ struct ExerciseView: View {
     
     @State private var isShowConfirmEndExercise = false
     @State private var isShowFeedback = false
+    
+    @State private var isExpanded = false
 
     let phoneme: Phoneme
     
@@ -46,6 +48,7 @@ struct ExerciseView: View {
                 .foregroundColor(.blue)
             
             phonemeTutorial
+            seeTips
             
             RepeatSound(audioRecorder: AudioRecorder(), ExerciseVM: viewModel, phoneme: phoneme)
         }
@@ -110,6 +113,42 @@ struct ExerciseView: View {
                     MiniVideoView(phoneme: phoneme)
                 )
         }
+    }
+    
+    private var seeTips: some View {
+        VStack {
+            Button {
+                withAnimation {
+                    isExpanded.toggle()
+                }
+            } label: {
+                HStack {
+                    Text("See tips")
+                        .foregroundStyle(.black)
+                        .fontWeight(.semibold)
+                    Spacer()
+                    Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
+                }
+                .padding()
+                .background(Color.gray.opacity(0.2))
+                .cornerRadius(8)
+            }
+            
+            if isExpanded {
+                ScrollView {
+                    VStack(alignment: .leading) {
+                        TipComponent(tip: phoneme.tips[0])
+                        TipComponent(tip: phoneme.tips[1])
+                        TipComponent(tip: phoneme.tips[2])
+                        
+                        Spacer()
+                    }
+                    .padding()
+                }
+            }
+        }
+        .padding()
+        
     }
     
     private var nextStepButton: some View {

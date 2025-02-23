@@ -16,12 +16,17 @@ struct RepeatSound: View {
     @StateObject private var PhonoVM = PhonoTestViewModel()
     
     @State var phoneme: Phoneme
-    @State var counter: Int = 0
+    @State var count: Int = 0
+    
+    @State private var isAnimating = false
+    
+    let maxProgress: CGFloat = 10.0
     
     var body: some View {
         VStack(spacing: 20) {
-            Text("\(counter)")
-                .font(.title)
+            Spacer()
+            counter
+                .padding()
             
 //            VStack {
 //                Text("Recognized Text")
@@ -35,7 +40,6 @@ struct RepeatSound: View {
 //                    .cornerRadius(8)
 //            }
             
-            Spacer()
 
 //            RecordedLast(audioRecorder: audioRecorder)
 //            
@@ -79,6 +83,30 @@ struct RepeatSound: View {
         .frame(maxHeight: .infinity)
     }
     
+    private var counter: some View {
+        VStack(spacing: 30) {
+                    ZStack {
+                        Circle()
+                            .stroke(lineWidth: 20)
+                            .foregroundColor(Color.gray.opacity(0.3)) // Fundo do círculo
+                        
+                        Circle()
+                            .trim(from: 0.0, to: CGFloat(count) / maxProgress)
+                            .stroke(style: StrokeStyle(lineWidth: 20, lineCap: .round, lineJoin: .round))
+                            .foregroundColor(.blue)
+                            .rotationEffect(.degrees(-90)) // Começa do topo
+                            .animation(.easeInOut(duration: 1.0), value: CGFloat(count)) // Animação suave
+                        
+                        Text("\(count)")
+                            .font(.system(size: 50, weight: .bold, design: .rounded))
+                            .foregroundColor(.blue)
+                    }
+                    .frame(width: 120, height: 120)
+                }
+                .padding()
+        
+    }
+    
     private func startRecording() {
         audioRecorder.startRecording()
         viewModel.startRecognition()
@@ -90,6 +118,6 @@ struct RepeatSound: View {
     }
     
     func incrementCounter() {
-        counter += 1
+        count += 1
     }
 }
