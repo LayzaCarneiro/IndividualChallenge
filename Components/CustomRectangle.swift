@@ -43,7 +43,8 @@ struct CustomRectangle: View {
                         Image(imageName)
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 90, height: 40)
+                            .frame(width: imageName == "waveSound" ? 100 : 70, height: imageName == "waveSound" ? 60 : 60)
+                            .foregroundStyle(.white)
                         
                         HStack {
                             Image(systemName: icon)

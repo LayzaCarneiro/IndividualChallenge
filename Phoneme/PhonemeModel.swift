@@ -15,4 +15,5 @@ struct Phoneme: Identifiable {
     let tips: [TipModel]
     let words: [String]
     let soundFile: String
+    let icon: String
 }

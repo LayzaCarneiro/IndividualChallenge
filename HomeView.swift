@@ -4,7 +4,7 @@ struct HomeView: View {
     @AppStorage("username") var username: String = "Little Person"
     @State private var showProfileView: Bool = false
     @State private var isExerciseViewPresented: Bool = false
-    @State private var phonemeExercise: Phoneme = Phoneme(letter: "s", symbol: "/s/", description: "", tips: [], words: [], soundFile: "s.mp4")
+    @State private var phonemeExercise: Phoneme = Phoneme(letter: "s", symbol: "/s/", description: "", tips: [], words: [], soundFile: "s.mp4", icon: "")
 
     var body: some View {
         NavigationStack {
@@ -25,7 +25,7 @@ struct HomeView: View {
                                     startPoint: .top,
                                     endPoint: .bottom),
                                                 title: "Tongue Twister",
-                                                imageName: "mouth 0",
+                                                imageName: "tongueTwisterIcon",
                                                 icon: "sparkles",
                                                 subtitle: "Challenge yourself!",
                                                 view: AnyView(TongueTwisterView())
@@ -36,8 +36,8 @@ struct HomeView: View {
                                     startPoint: .top,
                                     endPoint: .bottom),
                                                 title: "Review your audios",
-                                                imageName: "mouth 0",
-                                                icon: "microphone.fill",
+                                                imageName: "waveSound",
+                                                icon: "mic.fill",
                                                 subtitle: "Review your audios",
                                                 view: AnyView(RecordingsView())
                                 )

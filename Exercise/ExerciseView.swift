@@ -13,6 +13,7 @@ struct ExerciseView: View {
     @Binding var isPresented: Bool
     
     @State private var isShowConfirmEndExercise = false
+    @State private var isShowFeedback = false
 
     let phoneme: Phoneme
     
@@ -117,7 +118,7 @@ struct ExerciseView: View {
             if viewModel.currentStepIndex < viewModel.currentExercise.steps.count - 1 {
                 viewModel.goToNextStep()
             } else {
-                dismiss() // TODO:
+                isShowFeedback.toggle()
             }
         } label: {
             Text(viewModel.currentStepIndex < viewModel.currentExercise.steps.count - 1 ? "Next Step" : "Finish")
@@ -126,6 +127,9 @@ struct ExerciseView: View {
                 .background(viewModel.currentStepIndex < viewModel.currentExercise.steps.count - 1 ? Color.blue : Color.green)
                 .foregroundColor(.white)
                 .cornerRadius(10)
+        }
+        .sheet(isPresented: $isShowFeedback) {
+            FeedbackView(isExerciseViewPresented: $isPresented, phoneme: phoneme)
         }
     }
 }

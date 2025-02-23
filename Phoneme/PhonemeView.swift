@@ -44,9 +44,10 @@ struct PhonemeListView: View {
                                         .fill(Color("lightYellow"))
                                         .frame(width: 92, height: 97)
                                     
-                                    Image(systemName: "car.fill")
+                                    Image(systemName: phoneme.icon)
                                         .resizable()
-                                        .frame(width: 50, height: 42)
+                                        .scaledToFit()
+                                        .frame(width: 50, height: 40)
                                         .foregroundStyle(.white)
                                 }
                                 .frame(maxWidth: .infinity, alignment: .leading)
