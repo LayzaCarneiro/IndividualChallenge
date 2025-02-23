@@ -2,49 +2,49 @@ import SwiftUI
 import AVFoundation
 import CoreML
 
-struct PhonoTestView: View {
-    @StateObject private var viewModel = PhonoTestViewModel()
-    
-    var body: some View {
-        VStack(spacing: 20) {
-            Text("Teste do Modelo de Áudio")
-                .font(.title)
-                .bold()
-            
-            if viewModel.isRecording {
-                Text("Gravando...")
-                    .foregroundColor(.red)
-            }
-            
-            Button(action: {
-                viewModel.toggleRecording()
-            }) {
-                Text(viewModel.isRecording ? "Parar Gravação" : "Iniciar Gravação")
-                    .font(.headline)
-                    .padding()
-                    .background(viewModel.isRecording ? Color.red : Color.green)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-            }
-            .disabled(viewModel.isProcessing)
-            
-            if let prediction = viewModel.prediction {
-                Text("Previsão: \(prediction)")
-                    .font(.headline)
-            }
-            
-            Spacer()
-        }
-        .padding()
-        .alert(isPresented: $viewModel.showError) {
-            Alert(
-                title: Text("Erro"),
-                message: Text(viewModel.errorMessage ?? "Erro desconhecido"),
-                dismissButton: .default(Text("OK"))
-            )
-        }
-    }
-}
+//struct PhonoTestView: View {
+//    @StateObject private var viewModel = PhonoTestViewModel(targetClass: "s")
+//    
+//    var body: some View {
+//        VStack(spacing: 20) {
+//            Text("Teste do Modelo de Áudio")
+//                .font(.title)
+//                .bold()
+//            
+//            if viewModel.isRecording {
+//                Text("Gravando...")
+//                    .foregroundColor(.red)
+//            }
+//            
+//            Button(action: {
+//                viewModel.toggleRecording()
+//            }) {
+//                Text(viewModel.isRecording ? "Parar Gravação" : "Iniciar Gravação")
+//                    .font(.headline)
+//                    .padding()
+//                    .background(viewModel.isRecording ? Color.red : Color.green)
+//                    .foregroundColor(.white)
+//                    .cornerRadius(10)
+//            }
+//            .disabled(viewModel.isProcessing)
+//            
+//            if let prediction = viewModel.prediction {
+//                Text("Previsão: \(prediction)")
+//                    .font(.headline)
+//            }
+//            
+//            Spacer()
+//        }
+//        .padding()
+//        .alert(isPresented: $viewModel.showError) {
+//            Alert(
+//                title: Text("Erro"),
+//                message: Text(viewModel.errorMessage ?? "Erro desconhecido"),
+//                dismissButton: .default(Text("OK"))
+//            )
+//        }
+//    }
+//}
 
 class PhonoTestViewModel: ObservableObject {
     @Published var isRecording = false
@@ -52,11 +52,17 @@ class PhonoTestViewModel: ObservableObject {
     @Published var prediction: String?
     @Published var showError = false
     @Published var errorMessage: String?
-    
+    @Published var predictedClass: Bool?
     private var audioEngine: AVAudioEngine?
     private var audioBuffer = AVAudioPCMBuffer() // Acumulador de buffer
     private let model = try! PhonoV2() // Carrega o modelo ML
     private var recordingTimer: Timer?
+    
+    private var targetClass: String
+    
+    init(targetClass: String) {
+        self.targetClass = targetClass
+    }
     
     func toggleRecording() {
         if isRecording {
@@ -90,9 +96,9 @@ class PhonoTestViewModel: ObservableObject {
             isRecording = true
             
             // Agendar o término após 2 segundos
-            //            recordingTimer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { _ in
-            //                self.stopRecording()
-            //            }
+            recordingTimer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { _ in
+                self.stopRecording()
+            }
         } catch {
             handle(error: error)
         }
@@ -103,8 +109,6 @@ class PhonoTestViewModel: ObservableObject {
         audioEngine?.stop()
         audioEngine?.inputNode.removeTap(onBus: 0)
         isRecording = false
-        
-        // Processar o áudio acumulado
         processAudio()
     }
     
@@ -128,6 +132,11 @@ class PhonoTestViewModel: ObservableObject {
                     }
                     self.isProcessing = false
                     
+                    let isSAboveThreshold = self.isClassAboveThreshold(output: output, targetClass: self.targetClass ?? "")
+                    if isSAboveThreshold {
+                        self.predictedClass = true
+                        print("A classe \(self.targetClass ?? "") tem probabilidade maior que 75%!!!")
+                    } else { self.predictedClass = false }
                 }
             } catch {
                 DispatchQueue.main.async {
@@ -145,6 +154,13 @@ class PhonoTestViewModel: ObservableObject {
         for (className, probability) in sortedProbabilities {
             print("\(className): \(probability)")
         }
+    }
+    
+    func isClassAboveThreshold(output: PhonoV2Output, targetClass: String, threshold: Double = 0.05) -> Bool {
+        guard let probability = output.targetProbability[targetClass] else {
+            return false
+        }
+        return probability > threshold
     }
     
     func getClassWithHighestProbability(output: PhonoV2Output) -> String? {
@@ -202,8 +218,8 @@ extension AVAudioPCMBuffer {
     }
 }
 
-struct PhonoTestView_Previews: PreviewProvider {
-    static var previews: some View {
-        PhonoTestView()
-    }
-}
+//struct PhonoTestView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        PhonoTestView()
+//    }
+//}

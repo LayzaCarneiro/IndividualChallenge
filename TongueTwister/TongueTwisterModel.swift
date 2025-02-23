@@ -12,4 +12,5 @@ struct TongueTwisterModel: Identifiable {
     var title: String
     var text: String
     var phonemes: [String]
+    var icon: String
 }

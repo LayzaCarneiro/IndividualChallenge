@@ -13,43 +13,37 @@ struct RepeatSound: View {
     @ObservedObject var ExerciseVM: ExerciseViewModel
 
     @StateObject private var viewModel = SpeechRecognitionViewModel()
-    @StateObject private var PhonoVM = PhonoTestViewModel()
-    
+    @StateObject private var PhonoVM: PhonoTestViewModel
     @State var phoneme: Phoneme
     @State var count: Int = 0
     
     @State private var isAnimating = false
-    
-    let maxProgress: CGFloat = 10.0
+        
+    let maxProgress: CGFloat = 2.0
+    init(audioRecorder: AudioRecorder, ExerciseVM: ExerciseViewModel, phoneme: Phoneme) {
+        self.audioRecorder = audioRecorder
+        self.ExerciseVM = ExerciseVM
+        self._phoneme = State(initialValue: phoneme)
+        self._PhonoVM = StateObject(wrappedValue: PhonoTestViewModel(targetClass: phoneme.letter))
+    }
     
     var body: some View {
         VStack(spacing: 20) {
             Spacer()
+            
+            if let prediction = PhonoVM.predictedClass {
+                if prediction {
+                    Text("Congratssss")
+                        .font(.headline)
+                } else {
+                    Text("Try again!")
+                        .font(.headline)
+                }
+            }
+            
             counter
                 .padding()
             
-//            VStack {
-//                Text("Recognized Text")
-//                    .font(.caption)
-//                    .foregroundColor(.gray)
-//                Text(viewModel.recognizedText.isEmpty ? "..." : viewModel.recognizedText)
-//                    .font(.title3)
-//                    .padding()
-//                    .frame(maxWidth: .infinity)
-//                    .background(Color.gray.opacity(0.1))
-//                    .cornerRadius(8)
-//            }
-            
-
-//            RecordedLast(audioRecorder: audioRecorder)
-//            
-//            Spacer()
-            
-            if let prediction = PhonoVM.prediction {
-                Text("Previsão: \(prediction)")
-                    .font(.headline)
-            }
-                            
             Button {
                 PhonoVM.toggleRecording()
             } label: {
@@ -57,26 +51,36 @@ struct RepeatSound: View {
                     Circle()
                         .fill(PhonoVM.isRecording ? Color.red.opacity(0.3) : Color.gray.opacity(0.2))
                         .frame(width: 100, height: 100)
-                        .scaleEffect(PhonoVM.isRecording ? 1.2 : 1)
-                        .animation(.easeInOut(duration: 0.8).repeatForever(autoreverses: true), value: PhonoVM.isRecording)
+                        .overlay(
+                            Circle()
+                                .stroke(PhonoVM.isRecording ? Color.red : Color.blue, lineWidth: 4)
+                                .scaleEffect(PhonoVM.isRecording ? 1.3 : 1.0)
+                                .opacity(PhonoVM.isRecording ? 0.6 : 0.8)
+                        )
                     
-                    Image(systemName: PhonoVM.isRecording ? "stop.fill" : "circle.fill")
+                    Image(systemName: PhonoVM.isRecording ? "stop.fill" : "mic.fill")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 70, height: 70)
-                        .foregroundColor(PhonoVM.isRecording ? .red : .blue)
+                        .frame(width: 40, height: 40)
+                        .foregroundColor(.white)
+                        .background(Circle().fill(PhonoVM.isRecording ? Color("darkOrange") : Color.blue).frame(width: 80, height: 80))
+                        .shadow(color: PhonoVM.isRecording ? Color("darkOrange").opacity(0.7) : .blue.opacity(0.5), radius: 8)
                 }
             }
+            .buttonStyle(PlainButtonStyle())
             .disabled(PhonoVM.isProcessing)
-            
-            
         }
         .onAppear {
             viewModel.requestPermissions()
         }
-        .onChange(of: PhonoVM.prediction) { newPrediction, _ in
-            if newPrediction == phoneme.letter {
+        .onChange(of: PhonoVM.predictedClass) { newPrediction, _ in
+            if newPrediction == true {
                 incrementCounter()
+            }
+        }
+        .onChange(of: count) { count, _ in
+            if count >= Int(maxProgress) - 1 {
+                ExerciseVM.currentStepIndex += 1
             }
         }
         .padding()

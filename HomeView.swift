@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct HomeView: View {
-    @AppStorage("username") var username: String = "Little Person"
+    @AppStorage("username") var username: String = "Caterpillar 🐛"
     @State private var showProfileView: Bool = false
     @State private var isExerciseViewPresented: Bool = false
     @State private var phonemeExercise: Phoneme = Phoneme(letter: "s", symbol: "/s/", description: "", tips: [], words: [], soundFile: "s.mp4", icon: "", video: [])
@@ -9,7 +9,6 @@ struct HomeView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color("offWhite").ignoresSafeArea()
                 
                 if(isExerciseViewPresented) {
                     ExerciseView(isPresented: $isExerciseViewPresented, phoneme: phonemeExercise)
@@ -58,8 +57,6 @@ struct HomeView: View {
                                 .padding(.top, 20)
                             
                             TongueTwisterListView()
-                            
-                            
                         }
                         .padding()
                     }

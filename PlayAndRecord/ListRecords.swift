@@ -20,7 +20,15 @@ struct RecordingsList: View {
             .onDelete(perform: delete)
         }
         .scrollContentBackground(.hidden)
-
+        .overlay {
+            if audioRecorder.recordings.isEmpty {
+                ContentUnavailableView {
+                    Label("No Recordings", systemImage: "mic.fill")
+                } description: {
+                    Text("Start recording to add them here.")
+                }
+            }
+        }
     }
     
     func delete(at offsets: IndexSet) {

@@ -8,7 +8,7 @@ import SwiftUI
 
 class PhonemeViewModel: ObservableObject {
     @Published var phonemes: [Phoneme] = [
-        Phoneme(letter: "ʃ", symbol: "/ʃ/", description: "ship", tips: [
+        Phoneme(letter: "sh", symbol: "/ʃ/", description: "ship", tips: [
             TipModel(title: "1. Tongue", description: "Place the tip of your tongue at the front of the top of your mouth, behind where the /s/ is produced."),
             TipModel(title: "2. Respiration", description: "Push air between the top of your mouth and the tip of your tongue."),
             TipModel(title: "3. Vibration", description: "Do not vibrate your vocal cords.")
@@ -50,7 +50,7 @@ class PhonemeViewModel: ObservableObject {
             TipModel(title: "3. Vibration", description: "Do not vibrate your vocal cords when you make this sound; it’s voiceless.")
         ], words: ["choose", "which", "watch", "change"], soundFile: "ʧ", icon: "chair.fill", video: ["mouth_ʧ_1", "mouth_ʧ_2", "mouth_ʧ_3", "mouth_ʧ_4", "mouth_ʧ_5", "mouth_ʧ_6", "mouth_ʧ_7"]),
         
-        Phoneme(letter: "ʒ", symbol: "/ʒ/", description: "vision", tips: [
+        Phoneme(letter: "g", symbol: "/ʒ/", description: "vision", tips: [
             TipModel(title: "1. Tongue", description: "Place the tip of your tongue at the front of the top of your mouth, behind where the /s/ is produced."),
             TipModel(title: "2. Vibration", description: "Vibrate your vocal cords as you push air between the top of your mouth and the tip of your tongue."),
             TipModel(title: "", description: "")

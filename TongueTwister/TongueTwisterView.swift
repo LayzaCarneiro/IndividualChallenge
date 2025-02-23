@@ -32,7 +32,7 @@ struct TongueTwisterView: View {
     @StateObject private var speechSynthesizer = SpeechSynthesizer()
     @StateObject private var tongueTwisterVM = TongueTwisterViewModel()
 
-    @State var tongueTwister: TongueTwisterModel = TongueTwisterModel(title: "", text: "Loading...", phonemes: [])
+    @State var tongueTwister: TongueTwisterModel = TongueTwisterModel(title: "", text: "Loading...", phonemes: [], icon: "mouth.fill")
     @State private var accuracy: Double = 0.0
     @State private var accuracyData: [AccuracyEntry] = []
 
@@ -66,7 +66,9 @@ struct TongueTwisterView: View {
             }
         }
         .onAppear {
-            tongueTwister = tongueTwisterVM.randomTongueTwister()!
+            if tongueTwister.text == "Loading..." {
+                tongueTwister = tongueTwisterVM.randomTongueTwister()!
+            }
         }
         .onChange(of: viewModel.recognizedText) { newValue, _ in
             accuracy = percentage(original: tongueTwister.text, recognized: newValue)
@@ -75,7 +77,7 @@ struct TongueTwisterView: View {
     
     private var newTongueTwister: some View {
         Button {
-            tongueTwister = tongueTwisterVM.randomTongueTwister() ?? TongueTwisterModel(title: "", text: "Loading...", phonemes: [])
+            tongueTwister = tongueTwisterVM.randomTongueTwister() ?? TongueTwisterModel(title: "", text: "Loading...", phonemes: [], icon: "mouth.fill")
             accuracy = 0.0
             viewModel.recognizedText = ""
         } label: {

@@ -39,8 +39,9 @@ struct TongueTwisterListView: View {
                                             .fill(Color("lightYellow"))
                                             .frame(width: 92, height: 97)
                                         
-                                        Image(systemName: "car.fill")
+                                        Image(systemName: tongueTwister.icon)
                                             .resizable()
+                                            .scaledToFit()
                                             .frame(width: 50, height: 42)
                                             .foregroundStyle(.white)
                                     }

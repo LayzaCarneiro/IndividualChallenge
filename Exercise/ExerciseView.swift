@@ -14,7 +14,7 @@ struct ExerciseView: View {
     
     @State private var isShowConfirmEndExercise = false
     @State private var isShowFeedback = false
-    
+    @State var isShowConfirmSkipStep = false
     @State private var isExpanded = false
 
     let phoneme: Phoneme
@@ -33,8 +33,6 @@ struct ExerciseView: View {
                 }
                 
                 Spacer()
-                
-                nextStepButton
             }
         }
         .padding()
@@ -97,6 +95,8 @@ struct ExerciseView: View {
                 .progressViewStyle(ThickProgressViewStyle())
                 .animation(.easeInOut(duration: 0.5), value: viewModel.progress)
                 .padding()
+            
+            nextStepButton
         }
     }
     
@@ -153,22 +153,39 @@ struct ExerciseView: View {
     
     private var nextStepButton: some View {
         Button {
-            if viewModel.currentStepIndex < viewModel.currentExercise.steps.count - 1 {
-                viewModel.goToNextStep()
-            } else {
-                isShowFeedback.toggle()
-            }
+            isShowConfirmSkipStep.toggle()
         } label: {
-            Text(viewModel.currentStepIndex < viewModel.currentExercise.steps.count - 1 ? "Next Step" : "Finish")
-                .frame(maxWidth: .infinity)
-                .padding()
-                .background(viewModel.currentStepIndex < viewModel.currentExercise.steps.count - 1 ? Color.blue : Color.green)
+            Text(viewModel.currentStepIndex < viewModel.currentExercise.steps.count - 1 ? "Skip" : "Finish")
+                .font(.system(size: 16, weight: .semibold))
+                .padding(.horizontal, 16)
+                .padding(.vertical, 10)
                 .foregroundColor(.white)
-                .cornerRadius(10)
+                .background(viewModel.currentStepIndex < viewModel.currentExercise.steps.count - 1 ? Color.blue : Color.green)
+                .clipShape(Capsule())
         }
+        
+        .buttonStyle(PlainButtonStyle())
+        .animation(.easeInOut(duration: 0.2), value: viewModel.currentStepIndex)
+        .alert(isPresented: $isShowConfirmSkipStep) {
+                Alert(
+                    title: Text(viewModel.currentStepIndex < viewModel.currentExercise.steps.count - 1 ? "Skip Step" : "Finish Exercise"),
+                    message: Text(viewModel.currentStepIndex < viewModel.currentExercise.steps.count - 1 ?
+                                  "Are you sure you want to skip this step?" :
+                                  "Are you sure you want to finish the exercise?"),
+                    primaryButton: .destructive(Text(viewModel.currentStepIndex < viewModel.currentExercise.steps.count - 1 ? "Skip" : "Finish")) {
+                        if viewModel.currentStepIndex < viewModel.currentExercise.steps.count - 1 {
+                            viewModel.goToNextStep()
+                        } else {
+                            isShowFeedback.toggle()
+                        }
+                    },
+                    secondaryButton: .cancel()
+                )
+            }
         .sheet(isPresented: $isShowFeedback) {
             FeedbackView(isExerciseViewPresented: $isPresented, phoneme: phoneme)
         }
+
     }
 }
 

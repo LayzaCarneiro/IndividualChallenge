@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ProfileView: View {
-    @AppStorage("username") var username: String = ""
+    @AppStorage("username") var username: String = "Caterpillar 🐛"
     @AppStorage("firstLaunch") var firstLaunch: Bool = true
     
     @Environment(\.dismiss) var dismiss
@@ -76,21 +76,21 @@ struct ProfileView: View {
                             }
                             .backgroundStyle(.gray.opacity(0.1))
                             
-                            GroupBox {
-                                HStack {
-                                    Text("Reset All Data")
-                                        .fontWeight(.semibold)
-                                    Spacer()
-                                    Button {
-                                        showResetConfirm.toggle()
-                                    } label: {
-                                        Text("Reset")
-                                            .fontWeight(.bold)
-                                            .foregroundStyle(.red)
-                                    }
-                                }
-                            }
-                            .backgroundStyle(.gray.opacity(0.1))
+//                            GroupBox {
+//                                HStack {
+//                                    Text("Reset All Data")
+//                                        .fontWeight(.semibold)
+//                                    Spacer()
+//                                    Button {
+//                                        showResetConfirm.toggle()
+//                                    } label: {
+//                                        Text("Reset")
+//                                            .fontWeight(.bold)
+//                                            .foregroundStyle(.red)
+//                                    }
+//                                }
+//                            }
+//                            .backgroundStyle(.gray.opacity(0.1))
                         }
                     }
                     .padding(.vertical,10)
