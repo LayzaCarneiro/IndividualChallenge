@@ -12,7 +12,7 @@ struct HomeView: View {
                 Color("offWhite").ignoresSafeArea()
                 
                 if(isExerciseViewPresented) {
-                    ExerciseListView(phoneme: phonemeExercise)
+                    ExerciseView(isPresented: $isExerciseViewPresented, phoneme: phonemeExercise)
                 }
                 else {
                     ScrollView {

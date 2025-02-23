@@ -1,46 +1,27 @@
 //
-//  RandomTextView.swift
-//  Speeches
+//  RecordedView.swift
+//  Phono
 //
-//  Created by Layza Maria Rodrigues Carneiro on 20/02/25.
+//  Created by Layza Maria Rodrigues Carneiro on 22/02/25.
 //
 
 import SwiftUI
 
-struct RandomTextView: View {
-    @ObservedObject private var audioRecorder = AudioRecorder()
-    let randomText = randomStory()
+struct RecordedView: View {
+    @ObservedObject var audioRecorder: AudioRecorder
     
     var body: some View {
         NavigationStack {
             VStack {
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(Color("offWhite"))
-                    .stroke(.black)
-                    .frame(width: 770, height: 730)
-                    .overlay(text)
+                RecordingsList(audioRecorder: audioRecorder)
                 
-                Spacer()
                 recordingButton
             }
+            .navigationBarTitle("Recordings")
+            .navigationBarItems(trailing: EditButton())
         }
-        .navigationBarTitle("Recordings")
     }
     
-    private var text: some View {
-        VStack(spacing: 20) {
-            Text(randomText?.title ?? "")
-                .font(.system(size: 24, weight: .semibold))
-                .frame(maxWidth: .infinity, alignment: .leading)
-            
-            Text(randomText?.text ?? "")
-                .font(.system(size: 24))
-            
-            Spacer()
-        }
-        .padding()
-    }
-
     private var recordingButton: some View {
         if audioRecorder.recording == false {
             Button { self.audioRecorder.startRecording() } label: {

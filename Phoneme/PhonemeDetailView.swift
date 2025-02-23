@@ -20,7 +20,7 @@ struct PhonemeDetailView: View {
                 ZStack {
                     Color("offWhite").ignoresSafeArea()
                     
-                    VStack {
+                    VStack(spacing: 20) {
                         phonemeIcon
                         phonemeTutorial
                         phonemeTips
@@ -117,13 +117,17 @@ struct PhonemeDetailView: View {
             self.isExerciseViewPresented = true
             dismiss()
         } label: {
-            Text("Start Exercise")
-                .padding(.vertical,15)
-                .frame(minWidth: 100, maxWidth: .infinity, minHeight: 44)
-                .controlSize(.large)
-                .fontWeight(.bold)
-                .foregroundStyle(.red)
-                .cornerRadius(15)
+            RoundedRectangle(cornerRadius: 10)
+                .fill(LinearGradient(colors: [.red, .orange], startPoint: .top, endPoint: .bottom))
+                .frame(width: 540, height: 72)
+                .overlay(
+                    Text("Start Exercise")
+                        .font(.system(size: 26, weight: .bold))
+//                        .padding(.vertical, 15)
+//                        .frame(minWidth: 100, maxWidth: .infinity, minHeight: 44)
+//                        .controlSize(.large)
+                        .foregroundStyle(.white)
+                )
         }
     }
     

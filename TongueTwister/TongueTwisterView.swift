@@ -37,37 +37,59 @@ struct TongueTwisterView: View {
     @State private var accuracyData: [AccuracyEntry] = []
 
     var body: some View {
-        VStack {
-            Button {
-                tongueTwister = tongueTwisterVM.randomTongueTwister() ?? TongueTwisterModel(title: "", text: "Loading...", phonemes: [])
-                accuracy = 0.0
-                viewModel.recognizedText = ""
-            } label: {
-                Text("New Tongue Twister")
-                    .font(.headline)
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(LinearGradient(colors: [Color.blue, Color.cyan], startPoint: .leading, endPoint: .trailing))
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-                    .shadow(radius: 3)
-            }
-            .padding(.horizontal)
+        
+        ZStack {
+            Color("offWhite").edgesIgnoringSafeArea(.all)
             
-            Text(tongueTwister.text)
-                .multilineTextAlignment(.leading)
-                .padding()
-            
-            SpeechRecognitionView(viewModel: viewModel)
-            
-            Button("🔊 Listen") {
-                speechSynthesizer.speak(tongueTwister.text)
+            VStack {
+                newTongueTwister
+                tongueTwisterText
+                SpeechRecognitionView(viewModel: viewModel)
+                listenButton
+                Spacer()
             }
             .padding()
-            .background(Color.blue)
-            .foregroundColor(.white)
-            .cornerRadius(10)
-            
+            .padding(.horizontal)
+
+        }
+        .navigationTitle("Tongue Twister")
+        .onAppear {
+            tongueTwister = tongueTwisterVM.randomTongueTwister()!
+        }
+        .onChange(of: viewModel.recognizedText) { newValue, _ in
+            accuracy = percentage(original: tongueTwister.text, recognized: newValue)
+        }
+    }
+    
+    private var newTongueTwister: some View {
+        Button {
+            tongueTwister = tongueTwisterVM.randomTongueTwister() ?? TongueTwisterModel(title: "", text: "Loading...", phonemes: [])
+            accuracy = 0.0
+            viewModel.recognizedText = ""
+        } label: {
+            Text("New Tongue Twister")
+                .font(.headline)
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background(LinearGradient(colors: [Color.blue, Color.cyan], startPoint: .leading, endPoint: .trailing))
+                .foregroundColor(.white)
+                .cornerRadius(10)
+                .shadow(radius: 3)
+        }
+    }
+    
+    private var listenButton: some View {
+        Button("🔊 Listen") {
+            speechSynthesizer.speak(tongueTwister.text)
+        }
+        .padding()
+        .background(Color.blue)
+        .foregroundColor(.white)
+        .cornerRadius(10)
+    }
+    
+    private var accuracyChart: some View {
+        VStack {
             Gauge(value: accuracy, in: 0...100) {
                 Text("Accuracy")
             }
@@ -79,11 +101,24 @@ struct TongueTwisterView: View {
                 .font(.title)
                 .bold()
         }
-        .onAppear {
-            tongueTwister = tongueTwisterVM.randomTongueTwister()!
-        }
-        .onChange(of: viewModel.recognizedText) { newValue, _ in
-            accuracy = percentage(original: tongueTwister.text, recognized: newValue)
+    }
+    
+    private var tongueTwisterText: some View {
+        VStack {
+            Text(tongueTwister.title)
+                .font(.system(size: 32, weight: .bold))
+                .frame(maxWidth: .infinity, alignment: .leading)
+            
+            RoundedRectangle(cornerRadius: 10)
+                .fill(.gray)
+                .opacity(0.2)
+                .frame(width: 773, height: 212)
+                .overlay(
+                    Text(tongueTwister.text)
+                        .font(.system(size: 24))
+                        .multilineTextAlignment(.leading)
+                        .padding()
+                )
         }
     }
     

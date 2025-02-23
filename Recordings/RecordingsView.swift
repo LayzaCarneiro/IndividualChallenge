@@ -12,22 +12,25 @@ struct RecordingsView: View {
     @ObservedObject private var audioRecorder = AudioRecorder()
         
     var body: some View {
-        VStack {
-            Picker("Select View", selection: $selectedIndex) {
-                Text("Recordeds").tag(0)
-                Text("Random Text").tag(1)
+        ZStack {
+            Color("offWhite").ignoresSafeArea()
+
+            VStack {
+                Picker("Select View", selection: $selectedIndex) {
+                    Text("Recordeds").tag(0)
+                    Text("Random Text").tag(1)
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding()
+                
+                if selectedIndex == 0 {
+                    RecordedView(audioRecorder: AudioRecorder())
+                } else {
+                    RandomTextView()
+                }
+                
+                Spacer()
             }
-            .pickerStyle(SegmentedPickerStyle())
-            .padding()
-            
-            if selectedIndex == 0 {
-                AudioApp(audioRecorder: AudioRecorder())
-            } else {
-                RandomTextView()
-            }
-            
-            Spacer()
-        }
-        .padding()
+            .padding()}
     }
 }

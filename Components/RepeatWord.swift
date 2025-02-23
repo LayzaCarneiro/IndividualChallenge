@@ -6,10 +6,9 @@
 //
 
 import SwiftUI
-import AVKit
 import AVFoundation
 
-struct RepeatWord: View {
+struct RepeatSound: View {
     @ObservedObject var audioRecorder: AudioRecorder
     @ObservedObject var ExerciseVM: ExerciseViewModel
 
@@ -21,13 +20,6 @@ struct RepeatWord: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            Text(ExerciseVM.currentStep)
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .foregroundColor(.blue)
-                        
-            RecordingRow(audioURL: Bundle.main.url(forResource: phoneme.soundFile, withExtension: "m4a")!)
-            
             Text("\(counter)")
                 .font(.title)
             
@@ -45,9 +37,9 @@ struct RepeatWord: View {
             
             Spacer()
 
-            RecordedLast(audioRecorder: audioRecorder)
-            
-            Spacer()
+//            RecordedLast(audioRecorder: audioRecorder)
+//            
+//            Spacer()
             
             if let prediction = PhonoVM.prediction {
                 Text("Previsão: \(prediction)")
@@ -78,7 +70,7 @@ struct RepeatWord: View {
         .onAppear {
             viewModel.requestPermissions()
         }
-        .onChange(of: PhonoVM.prediction) { newPrediction in
+        .onChange(of: PhonoVM.prediction) { newPrediction, _ in
             if newPrediction == phoneme.letter {
                 incrementCounter()
             }

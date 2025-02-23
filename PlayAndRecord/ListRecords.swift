@@ -15,9 +15,12 @@ struct RecordingsList: View {
         List {
             ForEach(audioRecorder.recordings, id: \.createdAt) { recording in
                 RecordingRow(audioURL: recording.fileURL)
+                    .listRowBackground(Color("offWhite"))
             }
-        .onDelete(perform: delete)
+            .onDelete(perform: delete)
         }
+        .scrollContentBackground(.hidden)
+
     }
     
     func delete(at offsets: IndexSet) {
@@ -57,10 +60,8 @@ struct RecordedLast: View {
 }
 
 struct RecordingRow: View {
-
-    var audioURL: URL
-    
     @ObservedObject var audioPlayer = AudioPlayer()
+    var audioURL: URL
     
     var body: some View {
         HStack {
@@ -83,10 +84,22 @@ struct RecordingRow: View {
                         .imageScale(.large)
                 }
             }
-            
-            Text("Play sound")
+    
+            Text(getRecordingDate(from: audioURL))
                 .font(.headline)
                 .fontWeight(.semibold)
         }
+    }
+    
+    func getRecordingDate(from url: URL) -> String {
+        let fileAttributes = try? FileManager.default.attributesOfItem(atPath: url.path)
+        
+        if let creationDate = fileAttributes?[.creationDate] as? Date {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd/MM/yyyy - HH:mm" // Formato da data
+            return formatter.string(from: creationDate)
+        }
+        
+        return "Unknown date"
     }
 }
