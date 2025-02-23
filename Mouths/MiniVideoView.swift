@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MiniVideoView: View {
-    @State var images: [String] = ["mouth 0", "mouth 1", "mouth 2", "mouth 3"]
+//    @State var images: [String] = ["mouth_ʃ_1", "mouth_ʃ_2", "mouth_ʃ_3", "mouth_ʃ_4", "mouth_ʃ_5", "mouth_ʃ_6", "mouth_ʃ_7"]
     @State private var currentIndex = 0
     @State private var isPlaying = false
     @State private var loopCount = 0
@@ -21,14 +21,14 @@ struct MiniVideoView: View {
     
     var body: some View {
         ZStack {
-            Image(images[currentIndex])
+            Image(phoneme.video[currentIndex])
                 .resizable()
                 .scaledToFit()
-                .frame(width: 300, height: 300)
+                .frame(width: 300, height: 240)
                 .onReceive(timer) { _ in
                     guard isPlaying else { return }
                     
-                    currentIndex = (currentIndex + 1) % images.count
+                    currentIndex = (currentIndex + 1) % phoneme.video.count
                     
                     if currentIndex == 0 {
                         loopCount += 1
@@ -41,7 +41,7 @@ struct MiniVideoView: View {
                 }
             
             HStack {
-                if audioPlayer.isPlaying == false {
+                if loopCount == 0 && !isPlaying {
                     Button {
                         if !isPlaying {
                             isPlaying = true
@@ -67,6 +67,7 @@ struct MiniVideoView: View {
                             .frame(width: 50, height: 50)
                             .foregroundColor(.blue)
                     }
+                    .opacity(0)
                 }
             }
         }

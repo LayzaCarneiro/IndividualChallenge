@@ -68,10 +68,11 @@ class PhonoTestViewModel: ObservableObject {
 
     private func startRecording() {
         let audioSession = AVAudioSession.sharedInstance()
+
         do {
-            try audioSession.setCategory(.record, mode: .measurement, options: .duckOthers)
+            try audioSession.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker, .allowBluetooth])
             try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
-            
+ 
             audioEngine = AVAudioEngine()
             guard let audioEngine = audioEngine else { return }
 

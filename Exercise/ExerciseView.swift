@@ -105,10 +105,9 @@ struct ExerciseView: View {
             RoundedRectangle(cornerRadius: 10)
                 .fill(Color("offWhite"))
                 .stroke(.black)
-                .frame(width: 540, height: 220)
+                .frame(width: 540, height: 260)
                 .overlay(
                     MiniVideoView(phoneme: phoneme)
-                        .padding(.top, 30)
                 )
         }
     }

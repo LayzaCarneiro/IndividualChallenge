@@ -16,4 +16,5 @@ struct Phoneme: Identifiable {
     let words: [String]
     let soundFile: String
     let icon: String
+    let video: [String]
 }

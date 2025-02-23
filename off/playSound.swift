@@ -53,9 +53,14 @@ import AVFoundation
 
 struct PlaySoundButton: View {
     @State private var audioPlayer: AVAudioPlayer?
-    @State private var isPlaying = false
+//    @State private var isPlaying = false
     var fileName: String
     var fileExtension: String = "m4a"
+    
+    @State private var audioEngine: AVAudioEngine?
+    @State private var playerNode: AVAudioPlayerNode?
+    @State private var eqNode: AVAudioUnitEQ?
+    @State private var isPlaying = false
 
     var body: some View {
         Button {
@@ -74,6 +79,44 @@ struct PlaySoundButton: View {
             .padding()
         }
     }
+    
+//    private func playSound() {
+//        guard let url = Bundle.main.url(forResource: fileName, withExtension: fileExtension) else {
+//            print("Audio file not found")
+//            return
+//        }
+//        
+//        do {
+//            let file = try AVAudioFile(forReading: url)
+//            audioEngine = AVAudioEngine()
+//            playerNode = AVAudioPlayerNode()
+//            eqNode = AVAudioUnitEQ(numberOfBands: 1)
+//            
+//            guard let audioEngine = audioEngine, let playerNode = playerNode, let eqNode = eqNode else { return }
+//            
+//            // Configurar equalizador para aumentar o volume
+//            let band = eqNode.bands[0]
+//            band.filterType = .parametric
+//            band.frequency = 1000  // Foca em frequências de voz
+//            band.gain = 10.0        // Aumenta o volume em 10dB
+//            band.bypass = false
+//            
+//            // Configurar o pipeline de áudio
+//            audioEngine.attach(playerNode)
+//            audioEngine.attach(eqNode)
+//            audioEngine.connect(playerNode, to: eqNode, format: file.processingFormat)
+//            audioEngine.connect(eqNode, to: audioEngine.mainMixerNode, format: file.processingFormat)
+//            
+//            // Iniciar reprodução
+//            playerNode.scheduleFile(file, at: nil, completionHandler: nil)
+//            try audioEngine.start()
+//            playerNode.play()
+//            
+//            isPlaying = true
+//        } catch {
+//            print("Error playing audio: \(error.localizedDescription)")
+//        }
+//    }
 
     // Função para iniciar o som
     private func playSound() {
@@ -83,8 +126,11 @@ struct PlaySoundButton: View {
         }
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: url)
+            
+            audioPlayer?.volume = 1.0
+
             audioPlayer?.delegate = AVAudioPlayerDelegateHandler {
-                isPlaying = false // Quando o som termina, reseta o estado
+                isPlaying = false 
             }
             audioPlayer?.play()
             isPlaying = true

@@ -38,17 +38,19 @@ struct RandomTextView: View {
     }
     
     private var text: some View {
-        VStack(spacing: 20) {
-            Text(randomText?.title ?? "")
-                .font(.system(size: 24, weight: .semibold))
-                .frame(maxWidth: .infinity, alignment: .leading)
-            
-            Text(randomText?.text ?? "")
-                .font(.system(size: 24))
-            
-            Spacer()
+        ScrollView(.vertical) {
+            VStack(spacing: 20) {
+                Text(randomText?.title ?? "")
+                    .font(.system(size: 24, weight: .semibold))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                
+                Text(randomText?.text ?? "")
+                    .font(.system(size: 24))
+                
+                Spacer()
+            }
+            .padding()
         }
-        .padding()
     }
 
     private var recordingButton: some View {

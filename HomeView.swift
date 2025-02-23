@@ -4,7 +4,7 @@ struct HomeView: View {
     @AppStorage("username") var username: String = "Little Person"
     @State private var showProfileView: Bool = false
     @State private var isExerciseViewPresented: Bool = false
-    @State private var phonemeExercise: Phoneme = Phoneme(letter: "s", symbol: "/s/", description: "", tips: [], words: [], soundFile: "s.mp4", icon: "")
+    @State private var phonemeExercise: Phoneme = Phoneme(letter: "s", symbol: "/s/", description: "", tips: [], words: [], soundFile: "s.mp4", icon: "", video: [])
 
     var body: some View {
         NavigationStack {
@@ -24,7 +24,7 @@ struct HomeView: View {
                                     colors: [Color.blue, Color.cyan],
                                     startPoint: .top,
                                     endPoint: .bottom),
-                                                title: "Tongue Twister",
+                                                title: "Twist Your Tongue",
                                                 imageName: "tongueTwisterIcon",
                                                 icon: "sparkles",
                                                 subtitle: "Challenge yourself!",
@@ -35,10 +35,10 @@ struct HomeView: View {
                                     colors: [Color("lightYellow"), Color("darkYellow")],
                                     startPoint: .top,
                                     endPoint: .bottom),
-                                                title: "Review your audios",
+                                                title: "Record & Improve",
                                                 imageName: "waveSound",
                                                 icon: "mic.fill",
-                                                subtitle: "Review your audios",
+                                                subtitle: "Compare your speech",
                                                 view: AnyView(RecordingsView())
                                 )
                             

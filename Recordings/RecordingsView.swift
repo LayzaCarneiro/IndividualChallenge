@@ -17,16 +17,16 @@ struct RecordingsView: View {
 
             VStack {
                 Picker("Select View", selection: $selectedIndex) {
-                    Text("Recordeds").tag(0)
-                    Text("Random Text").tag(1)
+                    Text("Random Text").tag(0)
+                    Text("Recordeds").tag(1)
                 }
                 .pickerStyle(SegmentedPickerStyle())
                 .padding()
                 
                 if selectedIndex == 0 {
-                    RecordedView(audioRecorder: AudioRecorder())
-                } else {
                     RandomTextView()
+                } else {
+                    RecordedView(audioRecorder: AudioRecorder())
                 }
                 
                 Spacer()

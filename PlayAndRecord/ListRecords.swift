@@ -13,7 +13,7 @@ struct RecordingsList: View {
     
     var body: some View {
         List {
-            ForEach(audioRecorder.recordings, id: \.createdAt) { recording in
+            ForEach(audioRecorder.recordings.reversed(), id: \.createdAt) { recording in
                 RecordingRow(audioURL: recording.fileURL)
                     .listRowBackground(Color("offWhite"))
             }

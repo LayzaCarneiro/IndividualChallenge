@@ -47,11 +47,11 @@ struct CustomRectangle: View {
                             .foregroundStyle(.white)
                         
                         HStack {
-                            Image(systemName: icon)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 22, height: 22)
-                                .foregroundColor(.white)
+//                            Image(systemName: icon)
+//                                .resizable()
+//                                .scaledToFit()
+//                                .frame(width: 20, height: 20)
+//                                .foregroundColor(.white)
                             
                             Text(subtitle)
                                 .font(.subheadline)
