@@ -12,11 +12,10 @@ struct CustomButton: View {
     let gradient: LinearGradient
     
     var body: some View {
-        GeometryReader { geometry in
             ZStack {
                 Rectangle()
                     .fill(gradient)
-                    .frame(width: min(geometry.size.width * 0.85, 400) , height: 50)
+                    .frame(width: 400, height: 50)
                     .cornerRadius(10)
                     .shadow(radius: 5)
                 
@@ -25,8 +24,5 @@ struct CustomButton: View {
                     .fontWeight(.semibold)
                     .foregroundColor(.white)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-        }
-        .frame(height: 60)
     }
 }

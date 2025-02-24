@@ -25,7 +25,7 @@ class ExerciseViewModel: ObservableObject {
     }
 
     var progress: Double {
-        Double(currentStepIndex + 1) / Double(currentExercise.steps.count)
+        Double(currentStepIndex ) / Double(currentExercise.steps.count)
     }
 
     func goToNextStep() {

@@ -5,71 +5,62 @@ struct HomeView: View {
     @State private var showProfileView: Bool = false
     @State private var isExerciseViewPresented: Bool = false
     @State private var phonemeExercise: Phoneme = Phoneme(letter: "s", symbol: "/s/", description: "", tips: [], words: [], soundFile: "s.mp4", icon: "", video: [])
-
+    
     var body: some View {
         NavigationStack {
-            ZStack {
-                
-                if(isExerciseViewPresented) {
-                    ExerciseView(isPresented: $isExerciseViewPresented, phoneme: phonemeExercise)
-                }
-                else {
-                    ScrollView {
-                        greetingSection
-                        
-                        VStack(alignment: .leading) {
-                            HStack(spacing: 11) {
-                                CustomRectangle(gradient: LinearGradient(
-                                    colors: [Color.blue, Color.cyan],
-                                    startPoint: .top,
-                                    endPoint: .bottom),
-                                                title: "Twist Your Tongue",
-                                                imageName: "tongueTwisterIcon",
-                                                icon: "sparkles",
-                                                subtitle: "Challenge yourself!",
-                                                view: AnyView(TongueTwisterView())
-                                )
-                                
-                                CustomRectangle(gradient: LinearGradient(
-                                    colors: [Color("lightYellow"), Color("darkYellow")],
-                                    startPoint: .top,
-                                    endPoint: .bottom),
-                                                title: "Record & Improve",
-                                                imageName: "waveSound",
-                                                icon: "mic.fill",
-                                                subtitle: "Compare your speech",
-                                                view: AnyView(RecordingsView())
-                                )
+            if(isExerciseViewPresented) {
+                ExerciseView(isPresented: $isExerciseViewPresented, phoneme: phonemeExercise)
+            }
+            else {
+                ScrollView {
+                    greetingSection
+                    
+                    VStack(alignment: .leading) {
+                        HStack(spacing: 11) {
+                            CustomRectangle(gradient: LinearGradient(
+                                colors: [Color.blue, Color.cyan],
+                                startPoint: .top,
+                                endPoint: .bottom),
+                                            title: "Twist Your Tongue",
+                                            imageName: "tongueTwisterIcon",
+                                            icon: "sparkles",
+                                            subtitle: "Challenge yourself!",
+                                            view: AnyView(TongueTwisterView())
+                            )
                             
-                                WeekView()
-                            }
-                            
-                            Text("Phonemes")
-                                .font(.title)
-                                .fontWeight(.bold)
-                                .padding(.top, 20)
-                            
-                            PhonemeListView(isExerciseViewPresented: $isExerciseViewPresented, phonemeExercise: $phonemeExercise)
-                            
-                            Text("Tongue Twisters")
-                                .font(.title)
-                                .fontWeight(.bold)
-                                .padding(.top, 20)
-                            
-                            TongueTwisterListView()
+                            CustomRectangle(gradient: LinearGradient(
+                                colors: [Color("lightYellow"), Color("darkYellow")],
+                                startPoint: .top,
+                                endPoint: .bottom),
+                                            title: "Record & Improve",
+                                            imageName: "waveSound",
+                                            icon: "mic.fill",
+                                            subtitle: "Compare your speech",
+                                            view: AnyView(RecordingsView())
+                            )
                         }
-                        .padding()
+                        
+                        Text("Phonemes")
+                            .font(.title)
+                            .fontWeight(.bold)
+                            .padding(.top, 20)
+                        
+                        PhonemeListView(isExerciseViewPresented: $isExerciseViewPresented, phonemeExercise: $phonemeExercise)
+                        
+                        Text("Tongue Twisters")
+                            .font(.title)
+                            .fontWeight(.bold)
+                            .padding(.top, 20)
+                        
+                        TongueTwisterListView()
                     }
-                    .padding(.horizontal, UIDevice.current.userInterfaceIdiom == .pad ? 30 : 20)
-                    //                .padding(.top, 35)
-                    .padding(.vertical, 30)
-                    .font(.system(.body, design: .rounded))
-                    .sheet(isPresented: $showProfileView) {
-                        ProfileView()
-                    }
+                    .padding()
+                }
+                .font(.system(.body, design: .rounded))
+                .sheet(isPresented: $showProfileView) {
+                    ProfileView()
                 }
             }
-            .padding()
         }
     }
     

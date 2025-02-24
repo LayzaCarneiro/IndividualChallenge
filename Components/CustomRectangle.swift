@@ -11,7 +11,7 @@ struct CustomRectangle: View {
     let gradient: LinearGradient
     let title: String
     let imageName: String
-    let icon: String 
+    let icon: String
     let subtitle: String
     @State var view: AnyView
     
@@ -20,19 +20,11 @@ struct CustomRectangle: View {
             destination: view,
             label: {
                 ZStack {
-                    if(UIDevice.current.userInterfaceIdiom == .pad) {
-                        Rectangle()
-                            .fill(gradient)
-                            .frame(width: 232, height: 180)
-                            .cornerRadius(20)
-                            .shadow(radius: 5)
-                    } else {
-                        Rectangle()
-                            .fill(gradient)
-                            .frame(width: 100, height: 80)
-                            .cornerRadius(20)
-                            .shadow(radius: 5)
-                    }
+                    Rectangle()
+                        .fill(gradient)
+                    //                                .frame(width: 1, height: geometry.size.height * 18)
+                        .cornerRadius(20)
+                        .shadow(radius: 5)
                     
                     VStack {
                         Text(title)
@@ -46,19 +38,13 @@ struct CustomRectangle: View {
                             .frame(width: imageName == "waveSound" ? 100 : 70, height: imageName == "waveSound" ? 60 : 60)
                             .foregroundStyle(.white)
                         
-                        HStack {
-//                            Image(systemName: icon)
-//                                .resizable()
-//                                .scaledToFit()
-//                                .frame(width: 20, height: 20)
-//                                .foregroundColor(.white)
-                            
-                            Text(subtitle)
-                                .font(.subheadline)
-                                .fontWeight(.semibold)
-                                .foregroundColor(.white)
-                        }
+                        Text(subtitle)
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.white)
+                        
                     }
+                    .padding()
                 }
             }
         )

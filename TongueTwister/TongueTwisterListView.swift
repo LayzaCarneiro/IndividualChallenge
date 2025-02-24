@@ -45,7 +45,6 @@ struct TongueTwisterListView: View {
                                             .frame(width: 50, height: 42)
                                             .foregroundStyle(.white)
                                     }
-                                    .frame(maxWidth: .infinity, alignment: .leading)
                                     
                                     VStack(alignment: .leading) {
                                         Text(tongueTwister.title)
@@ -60,18 +59,14 @@ struct TongueTwisterListView: View {
                                             .foregroundStyle(.white)
                                             .padding(.horizontal, 10)
                                     }
-                                    .frame(maxWidth: .infinity)
 
                                     Image(systemName: "chevron.right")
                                         .resizable()
                                         .frame(width: 12, height: 20)
                                         .foregroundStyle(.white)
-                                        .frame(maxWidth: .infinity, alignment: .trailing)
 
                                 }
                                 .padding()
-                                .frame(maxWidth: .infinity)
-                                .padding(.horizontal, 1)
                             }
                         }
                     )

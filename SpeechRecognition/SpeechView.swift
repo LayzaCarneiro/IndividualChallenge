@@ -11,10 +11,17 @@ struct SpeechRecognitionView: View {
     @ObservedObject var viewModel: SpeechRecognitionViewModel
     
     var body: some View {
-        VStack {
+        VStack(spacing: 20) {
             Text(viewModel.recognizedText)
+                .font(.body)
+                .foregroundColor(.black)
                 .padding()
-                .border(Color.gray)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(Color.blue.opacity(0.1))
+                .cornerRadius(15)
+                .padding(.horizontal)
+            
+            Spacer()
             
             Button {
                 if viewModel.isRecognizing {
@@ -23,20 +30,25 @@ struct SpeechRecognitionView: View {
                     viewModel.startRecognition()
                 }
             } label: {
-                Text(viewModel.isRecognizing ? "Stop Recognition" : "Start Recognition")
-                    .padding()
-                    .background(viewModel.isRecognizing ? Color.red : Color.green)
+                Text(viewModel.isRecognizing ? "Stop" : "Try tongue twister")
+                    .font(.headline)
+                    .fontWeight(.bold)
                     .foregroundColor(.white)
-                    .cornerRadius(10)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(
+                        LinearGradient(gradient: Gradient(colors: [viewModel.isRecognizing ? Color("lightYellow") : Color("lightYellow"), viewModel.isRecognizing ? Color("lightYellow") : Color(("darkYellow"))]), startPoint: .leading, endPoint: .trailing)
+                    )
+                    .cornerRadius(15)
+                    .shadow(radius: 10)
+                    .scaleEffect(viewModel.isRecognizing ? 1.05 : 1.0)
+                    .animation(.spring(), value: viewModel.isRecognizing)
             }
+            .padding(.horizontal)
         }
         .onAppear {
             viewModel.requestPermissions()
         }
-        .padding()
-    }
-    
-    func getRecognizedText() -> String {
-        viewModel.recognizedText
+        .padding(.top, 20)
     }
 }

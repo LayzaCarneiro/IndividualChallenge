@@ -50,7 +50,6 @@ struct PhonemeListView: View {
                                         .frame(width: 50, height: 40)
                                         .foregroundStyle(.white)
                                 }
-                                .frame(maxWidth: .infinity, alignment: .leading)
                                 
                                 VStack {
                                     Text(phoneme.symbol)
@@ -63,17 +62,14 @@ struct PhonemeListView: View {
                                         .foregroundStyle(.white)
                                         .frame(width: 80)
                                 }
-                                .frame(maxWidth: .infinity)
 
                                 Image(systemName: "chevron.right")
                                     .resizable()
                                     .frame(width: 12, height: 20)
                                     .foregroundStyle(.white)
-                                    .frame(maxWidth: .infinity, alignment: .trailing)
 
                             }
                             .padding()
-                            .frame(maxWidth: .infinity)
                         }
                     }
                     .sheet(isPresented: $showPhonemeExercise) {

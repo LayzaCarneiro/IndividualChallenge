@@ -16,6 +16,7 @@ struct ContentView: View {
                 .blur(radius: firstLaunch ? 30 : 0)
                 .disabled(firstLaunch)
                 .animation(.easeOut(duration: 0.8), value: firstLaunch)
+                .padding()
             OnBoardingView(firstLaunch: $firstLaunch)
         }
     }

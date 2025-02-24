@@ -4,10 +4,8 @@ import SwiftUI
 struct MyApp: App {
     var body: some Scene {
         WindowGroup {
-            ZStack {                
-                ContentView()
-                    .ignoresSafeArea(.all)
-            }
+            ContentView()
+                .preferredColorScheme(.light)
         }
     }
 }

@@ -11,20 +11,19 @@ import AVFoundation
 struct RepeatSound: View {
     @ObservedObject var audioRecorder: AudioRecorder
     @ObservedObject var ExerciseVM: ExerciseViewModel
-
+    @ObservedObject var PhonoVM: PhonoTestViewModel //Changed StateObject to ObservedObject
     @StateObject private var viewModel = SpeechRecognitionViewModel()
-    @StateObject private var PhonoVM: PhonoTestViewModel
+
     @State var phoneme: Phoneme
-    @State var count: Int = 0
     
     @State private var isAnimating = false
         
-    let maxProgress: CGFloat = 2.0
+    let maxProgress: CGFloat = 3.0
     init(audioRecorder: AudioRecorder, ExerciseVM: ExerciseViewModel, phoneme: Phoneme) {
         self.audioRecorder = audioRecorder
         self.ExerciseVM = ExerciseVM
         self._phoneme = State(initialValue: phoneme)
-        self._PhonoVM = StateObject(wrappedValue: PhonoTestViewModel(targetClass: phoneme.letter))
+        self.PhonoVM = PhonoTestViewModel(targetClass: phoneme.letter)
     }
     
     var body: some View {
@@ -33,11 +32,14 @@ struct RepeatSound: View {
             
             if let prediction = PhonoVM.predictedClass {
                 if prediction {
-                    Text("Congratssss")
-                        .font(.headline)
+                    Text("Very good!! ")
+                        .font(.title2)
+                        .fontWeight(.bold)                    .foregroundStyle(.black)
                 } else {
                     Text("Try again!")
-                        .font(.headline)
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .foregroundStyle(.black)
                 }
             }
             
@@ -73,14 +75,12 @@ struct RepeatSound: View {
         .onAppear {
             viewModel.requestPermissions()
         }
-        .onChange(of: PhonoVM.predictedClass) { newPrediction, _ in
-            if newPrediction == true {
-                incrementCounter()
-            }
-        }
-        .onChange(of: count) { count, _ in
-            if count >= Int(maxProgress) - 1 {
-                ExerciseVM.currentStepIndex += 1
+
+        .onChange(of: PhonoVM.count) { newCount, _ in
+            if newCount >= Int(maxProgress) - 1 {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    ExerciseVM.currentStepIndex += 1
+                }
             }
         }
         .padding()
@@ -89,39 +89,25 @@ struct RepeatSound: View {
     
     private var counter: some View {
         VStack(spacing: 30) {
-                    ZStack {
-                        Circle()
-                            .stroke(lineWidth: 20)
-                            .foregroundColor(Color.gray.opacity(0.3)) // Fundo do círculo
-                        
-                        Circle()
-                            .trim(from: 0.0, to: CGFloat(count) / maxProgress)
-                            .stroke(style: StrokeStyle(lineWidth: 20, lineCap: .round, lineJoin: .round))
-                            .foregroundColor(.blue)
-                            .rotationEffect(.degrees(-90)) // Começa do topo
-                            .animation(.easeInOut(duration: 1.0), value: CGFloat(count)) // Animação suave
-                        
-                        Text("\(count)")
-                            .font(.system(size: 50, weight: .bold, design: .rounded))
-                            .foregroundColor(.blue)
-                    }
-                    .frame(width: 120, height: 120)
-                }
-                .padding()
+            ZStack {
+                Circle()
+                    .stroke(lineWidth: 20)
+                    .foregroundColor(Color.gray.opacity(0.3)) // Fundo do círculo
+                
+                Circle()
+                    .trim(from: 0.0, to: CGFloat(PhonoVM.count) / maxProgress) //Binded to PhonoVM.count
+                    .stroke(style: StrokeStyle(lineWidth: 20, lineCap: .round, lineJoin: .round))
+                    .foregroundColor(.blue)
+                    .rotationEffect(.degrees(-90)) // Começa do topo
+                    .animation(.easeInOut(duration: 1.0), value: CGFloat(PhonoVM.count)) // Animação suave
+                
+                Text("\(PhonoVM.count)") //Display PhonVM.count
+                    .font(.system(size: 50, weight: .bold, design: .rounded))
+                    .foregroundColor(.blue)
+            }
+            .frame(width: 120, height: 120)
+        }
+        .padding()
         
-    }
-    
-    private func startRecording() {
-        audioRecorder.startRecording()
-        viewModel.startRecognition()
-    }
-    
-    private func stopRecording() {
-        audioRecorder.stopRecording()
-        viewModel.stopRecognition()
-    }
-    
-    func incrementCounter() {
-        count += 1
     }
 }
